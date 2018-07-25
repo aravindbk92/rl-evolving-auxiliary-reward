@@ -2,7 +2,7 @@ import numpy as np
 import MDP
 
 class RL:
-    def __init__(self,mdp,sampleReward):
+    def __init__(self,mdp,sampleReward,instanceID=0,evoRewardObject=None):
         '''Constructor for the RL class
 
         Inputs:
@@ -14,6 +14,8 @@ class RL:
 
         self.mdp = mdp
         self.sampleReward = sampleReward
+        self.instanceID = instanceID
+        self.evoRewardObject = evoRewardObject
         
     def sampleRewardAndNextState(self,state,action):
         '''Procedure to sample a reward and the next state
@@ -33,8 +35,14 @@ class RL:
         cumProb = np.cumsum(self.mdp.T[action,state,:])
         nextState = np.where(cumProb >= np.random.rand(1))[0][0]
         return [reward,nextState]
+    
+    def getAugmentedReward(self,state, action):
+        if evoRewardObject is None:
+            return 0
+        else:
+            return self.evoRewardObject.getReward(self.instanceID, state, action)
 
-    def qLearning(self,s0,initialQ,nEpisodes,nSteps,epsilon=0,temperature=0):
+    def qLearning(self,s0,initialQ,nEpisodes,nSteps,epsilon=0,temperature=0, evoReward=False):
         '''qLearning algorithm.  Epsilon exploration and Boltzmann exploration
         are combined in one procedure by sampling a random action with 
         probabilty epsilon and performing Boltzmann exploration otherwise.  
@@ -73,6 +81,9 @@ class RL:
                     
                 [r,s_prime] = self.sampleRewardAndNextState(s,a)
                 episode_rewards[-1] += r
+                
+                if (evoReward):
+                    r += self.getAugmentedReward(s,a)
                 visit_count[a,s] += 1
                 alpha = 1.0/visit_count[a,s]
                 Q[a,s] = Q_old[a,s] + alpha * (r + self.mdp.discount * np.max(Q_old[:,s_prime]) - Q_old[a,s])

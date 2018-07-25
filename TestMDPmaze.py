@@ -2,6 +2,7 @@ import numpy as np
 import MDP
 import sys
 import RL
+import RLEvo
 import matplotlib.pyplot as plt
 
 ''' Construct a simple maze MDP
@@ -301,8 +302,10 @@ discount = 0.95
 # MDP object
 mdp = MDP.MDP(T,R,discount)
 rlProblem = RL.RL(mdp,np.random.normal)
+rlEvo = RLEvo.RLEvo(mdp,np.random.normal)
 
 num_trials = 100
+
 episode_reward_avg = np.zeros(200)
 print ("Q-learning with normal reward:")
 for trial in range(num_trials):
@@ -320,7 +323,7 @@ episode_reward_avg = np.zeros(200)
 print ("Q-learning with augmented reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlProblem.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, initial_population=10)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, initial_population=10)
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
