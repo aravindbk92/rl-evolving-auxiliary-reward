@@ -317,25 +317,90 @@ print ("Policy:")
 print (policy, "\n")
 
 episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="normal reward")
+plt.plot(episode_reward_avg, label="basic Q learning")
+
+#episode_reward_avg = np.zeros(200)
+#print ("Q-learning with augmented reward:")
+#for trial in range(num_trials):
+#    print ("trial:", trial)
+#    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=10)
+#    episode_reward_avg += episode_rewards
+#    
+#print ("Policy:")
+#print (policy, "\n")
+#
+#episode_reward_avg /= num_trials
+#plt.plot(episode_reward_avg, label="augmented reward")
 
 episode_reward_avg = np.zeros(200)
 print ("Q-learning with augmented reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, initial_population=10)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=1)
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
 print (policy, "\n")
 
 episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="augmented reward")
+plt.plot(episode_reward_avg, label="population:1")
+
+episode_reward_avg = np.zeros(200)
+print ("Q-learning with augmented reward:")
+for trial in range(num_trials):
+    print ("trial:", trial)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=5)
+    episode_reward_avg += episode_rewards
+    
+print ("Policy:")
+print (policy, "\n")
+
+episode_reward_avg /= num_trials
+plt.plot(episode_reward_avg, label="population:5")
+
+episode_reward_avg = np.zeros(200)
+print ("Q-learning with augmented reward:")
+for trial in range(num_trials):
+    print ("trial:", trial)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=10)
+    episode_reward_avg += episode_rewards
+    
+print ("Policy:")
+print (policy, "\n")
+
+episode_reward_avg /= num_trials
+plt.plot(episode_reward_avg, label="population:10")
+
+episode_reward_avg = np.zeros(200)
+print ("Q-learning with augmented reward:")
+for trial in range(num_trials):
+    print ("trial:", trial)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=20)
+    episode_reward_avg += episode_rewards
+    
+print ("Policy:")
+print (policy, "\n")
+
+episode_reward_avg /= num_trials
+plt.plot(episode_reward_avg, label="population:20")
+
+episode_reward_avg = np.zeros(200)
+print ("Q-learning with augmented reward:")
+for trial in range(num_trials):
+    print ("trial:", trial)
+    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=40)
+    episode_reward_avg += episode_rewards
+    
+print ("Policy:")
+print (policy, "\n")
+
+episode_reward_avg /= num_trials
+plt.plot(episode_reward_avg, label="population:40")
 
 plt.xlabel("Episode")
 plt.ylabel("Average Cumulative Reward")
-plt.legend(title="Exploration Probability Epsilon")
-plt.savefig("exp_prob_epsilon.png")
+plt.legend(title="DQN type")
+plt.savefig("result.png")
     
     
     

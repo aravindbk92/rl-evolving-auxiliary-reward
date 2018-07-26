@@ -1,5 +1,4 @@
 import numpy as np
-import MDP
 
 class RL:
     def __init__(self,mdp,sampleReward,instanceID=0,evoRewardObject=None):
@@ -37,10 +36,10 @@ class RL:
         return [reward,nextState]
     
     def getAugmentedReward(self,state, action):
-        if evoRewardObject is None:
+        if self.evoRewardObject is None:
             return 0
         else:
-            return self.evoRewardObject.getReward(self.instanceID, state, action)
+            return self.evoRewardObject.getReward(self.instanceID, action, state, self.mdp.nStates)
 
     def qLearning(self,s0,initialQ,nEpisodes,nSteps,epsilon=0,temperature=0, evoReward=False):
         '''qLearning algorithm.  Epsilon exploration and Boltzmann exploration
