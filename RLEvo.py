@@ -32,6 +32,7 @@ class RLEvo:
         # Initialize variables for Algo
         Q_max = None
         policy_max = None
+        augmented_reward_max = None
         episode_reward_max = np.array([])
         Q_population = list(range(n_population))
         # Run episodes
@@ -61,10 +62,11 @@ class RLEvo:
             if (n_episodes == nEpisodes-1):                
                 Q_max = Q_population[max_index]
                 policy_max = policy_population[max_index]
+                augmented_reward_max = evoRewardObject.getDNA(max_index)
                 break                
             
             # Evolve rewards
             evoRewardObject.set_fitness(np.array(episode_reward_population))
             evoRewardObject.evolve()
         
-        return [Q_max,policy_max,episode_reward_max]
+        return [Q_max,policy_max,episode_reward_max,augmented_reward_max]
