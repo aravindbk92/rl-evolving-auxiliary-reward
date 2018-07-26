@@ -20,8 +20,12 @@ class evoReward():
         self.pop = np.random.randint(*DNA_bound, size=(pop_size, DNA_size)).astype(np.int8)
 
     def set_fitness(self, fitness):
-        normalized_fitness = (fitness - np.min(fitness))/np.ptp(fitness)
-        self.fitness = normalized_fitness
+        ptp = np.ptp(fitness)
+        if ptp != 0:
+            normalized_fitness = (fitness - np.min(fitness))/ptp
+            self.fitness = normalized_fitness
+        else:
+            self.fitness = fitness
 
     def get_fitness(self):
         return self.fitness
@@ -53,7 +57,7 @@ class evoReward():
             parent[:] = child
         self.pop = pop
         
-    def getReward(self, dna_index, m, n, coloumn_max):
+    def get_reward(self, dna_index, m, n, coloumn_max):
         reward_index = m*coloumn_max + n
         return self.pop[dna_index,reward_index]
     
