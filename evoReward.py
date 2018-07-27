@@ -61,5 +61,5 @@ class evoReward():
         reward_index = m*coloumn_max + n
         return self.pop[dna_index,reward_index]
     
-    def getDNA(self, n):
+    def get_DNA(self, n):
         return self.pop[n]

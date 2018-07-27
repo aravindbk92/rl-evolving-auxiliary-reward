@@ -304,13 +304,16 @@ mdp = MDP.MDP(T,R,discount)
 rlProblem = RL.RL(mdp,np.random.normal)
 rlEvo = RLEvo.RLEvo(mdp,np.random.normal)
 
-num_trials = 100
+num_trials = 10
+num_episodes = 200
+n_steps = 100
+epsilon = 0.3
 
-episode_reward_avg = np.zeros(200)
+episode_reward_avg = np.zeros(num_episodes*40)
 print ("Q-learning with normal reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlProblem.qLearning(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3)
+    [Q,policy, episode_rewards] = rlProblem.qLearning(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=num_episodes*40,nSteps=n_steps,epsilon=epsilon)
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
@@ -319,76 +322,12 @@ print (policy, "\n")
 episode_reward_avg /= num_trials
 plt.plot(episode_reward_avg, label="basic Q learning")
 
-#episode_reward_avg = np.zeros(200)
-#print ("Q-learning with augmented reward:")
-#for trial in range(num_trials):
-#    print ("trial:", trial)
-#    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=10)
-#    episode_reward_avg += episode_rewards
-#    
-#print ("Policy:")
-#print (policy, "\n")
-#
-#episode_reward_avg /= num_trials
-#plt.plot(episode_reward_avg, label="augmented reward")
-
-episode_reward_avg = np.zeros(200)
+episode_reward_avg = np.zeros(num_episodes*40)
 print ("Q-learning with augmented reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=1)
-    episode_reward_avg += episode_rewards
-    
-print ("Policy:")
-print (policy, "\n")
-
-episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="population:1")
-
-episode_reward_avg = np.zeros(200)
-print ("Q-learning with augmented reward:")
-for trial in range(num_trials):
-    print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=5)
-    episode_reward_avg += episode_rewards
-    
-print ("Policy:")
-print (policy, "\n")
-
-episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="population:5")
-
-episode_reward_avg = np.zeros(200)
-print ("Q-learning with augmented reward:")
-for trial in range(num_trials):
-    print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=10)
-    episode_reward_avg += episode_rewards
-    
-print ("Policy:")
-print (policy, "\n")
-
-episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="population:10")
-
-episode_reward_avg = np.zeros(200)
-print ("Q-learning with augmented reward:")
-for trial in range(num_trials):
-    print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=20)
-    episode_reward_avg += episode_rewards
-    
-print ("Policy:")
-print (policy, "\n")
-
-episode_reward_avg /= num_trials
-plt.plot(episode_reward_avg, label="population:20")
-
-episode_reward_avg = np.zeros(200)
-print ("Q-learning with augmented reward:")
-for trial in range(num_trials):
-    print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=200,nSteps=100,epsilon=0.3, n_population=40)
+    [Q,policy, episode_rewards,augment] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=num_episodes,nSteps=n_steps,epsilon=epsilon, n_population=40)
+    episode_rewards = np.pad(episode_rewards, (7800,0), 'constant', constant_values=float('nan'))
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
