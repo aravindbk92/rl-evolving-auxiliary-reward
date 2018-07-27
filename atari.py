@@ -6,13 +6,10 @@ import numpy as np
 CROSS_RATE = 0.4                    # mating probability (DNA crossover)
 MUTATION_RATE = 0.01                # mutation probability
 REWARD_BOUND = [-10,10]               # Bounds for the augmented reward
-GAMMA = 0.9
-EPSILON= 0.95
 
 class AtariTrain:
-    def __init__(self,env="CartPole-v0", solve_score=195.0):
+    def __init__(self,env="CartPole-v0"):
         self.env = gym.make(env)
-        self.solve_score = solve_score
 
     def dqn_train(self, gamma=0.9,epsilon=0.95,n_episodes=100,n_steps=200, render=False):
         # init DQN agent
@@ -39,10 +36,7 @@ class AtariTrain:
                 if done:
                     break
             episode_reward_history = np.append(episode_reward_history,episode_reward)
-            print("Episode ",episode,"-> reward: ", episode_reward)
-            if (episode_reward >= self.solve_score):
-                print("Solved in ", episode, "episodes")
-                break
+            print("Episode ",episode+1,"-> reward: ", episode_reward)
 
         dqn_agent.save_model("models/dqn-reward{}.model".format(episode_reward_history[-1]))
 
@@ -71,7 +65,6 @@ class AtariTrain:
 
         episode_reward_max_history = np.array([])
         model_max = None
-        solved = False
         for episode in range(n_episodes):            
             episode_reward_population = np.array([])
 
@@ -103,14 +96,10 @@ class AtariTrain:
             max_index = np.argmax(episode_reward_population)
             episode_reward_max = episode_reward_population[max_index]
             episode_reward_max_history = np.append(episode_reward_max_history,episode_reward_max)
-            print("Episode ",episode,"-> max_reward: ", episode_reward_population[max_index])
+            print("Episode ",episode+1,"-> max_reward: ", episode_reward_population[max_index])
 
-            # If last episode or if solved , find best Q model
-            if (episode_reward_max >= self.solve_score):
-                solved = True
-            if (episode == n_episodes-1 or solved):
-                if (solved):
-                    print("Solved in ", episode, "episodes")
+            # If last episode, find best Q model
+            if (episode == n_episodes-1):
                 model_max = dqn_agents[max_index]
                 augmented_reward_max = self.evoRewardObject.get_DNA(max_index)
                 break
@@ -135,19 +124,3 @@ class AtariTrain:
 
     def preprocess(self,state):
         return state.reshape(1,self.env.observation_space.high.size)
-
-import matplotlib.pyplot as plt
-
-atari = AtariTrain(env="CartPole-v0", solve_score=195.0)
-
-#[episode_rewards] =atari.dqn_train(n_episodes=50)
-#plt.plot(episode_rewards, label="DQN")
-
-n_population=5
-[episode_rewards,augment] =atari.evodqn_train(n_episodes=2, n_population=n_population)
-plt.plot(episode_rewards, label="DQN-evoReward, pop: "+str(n_population))
-
-plt.xlabel("Episode")
-plt.ylabel("Average Cumulative Reward")
-plt.legend(title="DQN type")
-plt.savefig("result.png")

@@ -309,11 +309,11 @@ num_episodes = 200
 n_steps = 100
 epsilon = 0.3
 
-episode_reward_avg = np.zeros(num_episodes*40)
+episode_reward_avg = np.zeros(num_episodes)
 print ("Q-learning with normal reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
-    [Q,policy, episode_rewards] = rlProblem.qLearning(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=num_episodes*40,nSteps=n_steps,epsilon=epsilon)
+    [Q,policy, episode_rewards] = rlProblem.qLearning(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=num_episodes,nSteps=n_steps,epsilon=epsilon)
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
@@ -322,12 +322,11 @@ print (policy, "\n")
 episode_reward_avg /= num_trials
 plt.plot(episode_reward_avg, label="basic Q learning")
 
-episode_reward_avg = np.zeros(num_episodes*40)
+episode_reward_avg = np.zeros(num_episodes)
 print ("Q-learning with augmented reward:")
 for trial in range(num_trials):
     print ("trial:", trial)
     [Q,policy, episode_rewards,augment] = rlEvo.qLearningAugmented(s0=0,initialQ=np.zeros([mdp.nActions,mdp.nStates]),nEpisodes=num_episodes,nSteps=n_steps,epsilon=epsilon, n_population=40)
-    episode_rewards = np.pad(episode_rewards, (7800,0), 'constant', constant_values=float('nan'))
     episode_reward_avg += episode_rewards
     
 print ("Policy:")
