@@ -70,7 +70,7 @@ class DQN:
         self.model.save(fn)
 
 def dqn_train():
-    env     = gym.make("MountainCar-v4")
+    env     = gym.make("MountainCar-v0")
     gamma   = 0.9
     epsilon = .95
 
