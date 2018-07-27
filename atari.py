@@ -2,21 +2,28 @@ import gym
 import evoReward
 from dqn import DQN
 import numpy as np
+from collections import deque
+
+np.random.seed(0)
 
 CROSS_RATE = 0.4                    # mating probability (DNA crossover)
 MUTATION_RATE = 0.01                # mutation probability
 REWARD_BOUND = [-10,10]               # Bounds for the augmented reward
+PRINT_INTERVAL = 10
 
 class AtariTrain:
-    def __init__(self,env="CartPole-v0"):
+    def __init__(self,env="CartPole-v0",solve_score=195.0):
         self.env = gym.make(env)
+        self.env.seed(0)
+        self.solve_score = solve_score
 
     def dqn_train(self, gamma=0.9,epsilon=0.95,n_episodes=100,n_steps=200, render=False):
         # init DQN agent
         dqn_agent = DQN(env=self.env,gamma=gamma,epsilon=epsilon)
 
-        episode_reward_history = np.array([])
-        for episode in range(n_episodes):
+        scores_deque = deque(maxlen=100)
+        scores = []        
+        for episode in range(1,n_episodes+1):
             cur_state = self.preprocess(self.env.reset())
             episode_reward = 0.0
             for step in range(n_steps):
@@ -35,10 +42,15 @@ class AtariTrain:
                 cur_state = new_state
                 if done:
                     break
-            episode_reward_history = np.append(episode_reward_history,episode_reward)
-            print("Episode ",episode+1,"-> reward: ", episode_reward)
+            scores_deque.append(episode_reward)
+            scores.append(episode_reward)           
+            if (episode % PRINT_INTERVAL == 0):
+                print('Episode {}\tAverage Score: {:.2f}'.format(episode, np.mean(scores_deque)))
+            if np.mean(scores_deque)>=self.solve_score:
+                print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(episode-100, np.mean(scores_deque)))
+                break            
 
-        dqn_agent.save_model("models/dqn-reward{}.model".format(episode_reward_history[-1]))
+        dqn_agent.save_model("models/dqn-reward{}.model".format(scores_deque[-1]))
 
         # render successful model
         if (render):
@@ -50,7 +62,7 @@ class AtariTrain:
                 new_state, reward, is_done, _ = self.env.step(action)
                 cur_state = self.preprocess(new_state)
 
-        return [episode_reward_history]
+        return [np.array(scores)]
 
     def evodqn_train(self, gamma=0.9,epsilon=0.95,n_episodes=100,n_steps=200, render=False, n_population=10,cross_rate=CROSS_RATE, mutation_rate=MUTATION_RATE,reward_bound=REWARD_BOUND):
         # Init augmented reward object
