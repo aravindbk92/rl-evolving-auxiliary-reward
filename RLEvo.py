@@ -42,7 +42,7 @@ class RLEvo:
         if self.evoRewardObject is None:
             return 0
         else:
-            return self.evoRewardObject.get_reward(instanceID, action, state, self.mdp.nStates)        
+            return self.evoRewardObject.get_reward(instanceID, action, state, self.mdp.nStates)
         
     def qLearningAugmented(self,s0,initialQ,nEpisodes,nSteps,epsilon=0,temperature=0, n_population=10, cross_rate=CROSS_RATE, mutation_rate=MUTATION_RATE,reward_bound=REWARD_BOUND):
         # Instantiate reward GA object

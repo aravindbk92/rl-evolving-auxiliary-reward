@@ -8,16 +8,22 @@ Created on Wed Jul 25 11:36:51 2018
 
 import numpy as np
 
+TYPE_INDEX = 0 # if dna consists of explicit rewards that mapped to action x state pairs
+TYPE_WEIGHTS = 1 # if dna consists of weights mapped to actions. reward is linear combination of weights and state
+
 class evoReward():
-    def __init__(self, DNA_size, DNA_bound, cross_rate, mutation_rate, pop_size):
-        self.DNA_size = DNA_size        
+    def __init__(self, DNA_bound, cross_rate, mutation_rate, pop_size, obs_space_size, action_size, dna_type=TYPE_INDEX):
         self.DNA_bound = DNA_bound
         self.cross_rate = cross_rate
         self.mutate_rate = mutation_rate
         self.pop_size = pop_size
         self.fitness = np.array([])
-
-        self.pop = np.random.randint(*DNA_bound, size=(pop_size, DNA_size)).astype(np.int8)
+        self.obs_space_size = obs_space_size
+        self.action_size = action_size
+        self.dna_type = dna_type
+        
+        self.DNA_size = obs_space_size * action_size
+        self.pop = np.random.randint(*DNA_bound, size=(pop_size, self.DNA_size)).astype(np.int8)
 
     def set_fitness(self, fitness):
         ptp = np.ptp(fitness)
@@ -57,9 +63,18 @@ class evoReward():
             parent[:] = child
         self.pop = pop
         
-    def get_reward(self, dna_index, m, n, coloumn_max):
-        reward_index = m*coloumn_max + n
-        return self.pop[dna_index,reward_index]
+    def get_reward(self, dna_index, action, state):
+        # if dna consists of explicit rewards that mapped to action x state pairs
+        if self.dna_type == TYPE_INDEX:
+            reward_index = action*self.obs_space_size + state
+            return self.pop[dna_index,reward_index]
+        
+        # if dna consists of weights mapped to actions
+        # reward is linear combination of weights and state
+        if self.dna_type == TYPE_WEIGHTS:
+            weight_matrix = self.pop[dna_index].reshape(self.action_size,self.obs_space_size)
+            weights = weight_matrix[action]
+            return np.sum(weights * state)
     
     def get_DNA(self, n):
-        return self.pop[n]
+        return self.pop[n].reshape((self.action_size,self.obs_space_size))

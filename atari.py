@@ -1,117 +1,153 @@
 import gym
+import evoReward
+from dqn import DQN
 import numpy as np
-import random
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
-from keras.optimizers import Adam
 
-from collections import deque
+CROSS_RATE = 0.4                    # mating probability (DNA crossover)
+MUTATION_RATE = 0.01                # mutation probability
+REWARD_BOUND = [-10,10]               # Bounds for the augmented reward
+GAMMA = 0.9
+EPSILON= 0.95
 
-class DQN:
-    def __init__(self, env):
-        self.env     = env
-        self.memory  = deque(maxlen=2000)
-        
-        self.gamma = 0.85
-        self.epsilon = 1.0
-        self.epsilon_min = 0.01
-        self.epsilon_decay = 0.995
-        self.learning_rate = 0.005
-        self.tau = .125
+class AtariTrain:
+    def __init__(self,env="CartPole-v0", solve_score=195.0):
+        self.env = gym.make(env)
+        self.solve_score = solve_score
 
-        self.model        = self.create_model()
-        self.target_model = self.create_model()
+    def dqn_train(self, gamma=0.9,epsilon=0.95,n_episodes=100,n_steps=200, render=False):
+        # init DQN agent
+        dqn_agent = DQN(env=self.env,gamma=gamma,epsilon=epsilon)
 
-    def create_model(self):
-        model   = Sequential()
-        state_shape  = self.env.observation_space.shape
-        model.add(Dense(24, input_dim=state_shape[0], activation="relu"))
-        model.add(Dense(48, activation="relu"))
-        model.add(Dense(24, activation="relu"))
-        model.add(Dense(self.env.action_space.n))
-        model.compile(loss="mean_squared_error",
-            optimizer=Adam(lr=self.learning_rate))
-        return model
+        episode_reward_history = np.array([])
+        for episode in range(n_episodes):
+            cur_state = self.preprocess(self.env.reset())
+            episode_reward = 0.0
+            for step in range(n_steps):
+                # step environment
+                action = dqn_agent.act(cur_state)
+                new_state, reward, done, _ = self.env.step(action)
+                episode_reward += reward
+                
+                # train dqn
+                new_state = self.preprocess(new_state)
+                dqn_agent.remember(cur_state, action, reward, new_state, done)
+                dqn_agent.replay()
+                dqn_agent.target_train()
 
-    def act(self, state):
-        self.epsilon *= self.epsilon_decay
-        self.epsilon = max(self.epsilon_min, self.epsilon)
-        if np.random.random() < self.epsilon:
-            return self.env.action_space.sample()
-        return np.argmax(self.model.predict(state)[0])
-
-    def remember(self, state, action, reward, new_state, done):
-        self.memory.append([state, action, reward, new_state, done])
-
-    def replay(self):
-        batch_size = 32
-        if len(self.memory) < batch_size: 
-            return
-
-        samples = random.sample(self.memory, batch_size)
-        for sample in samples:
-            state, action, reward, new_state, done = sample
-            target = self.target_model.predict(state)
-            if done:
-                target[0][action] = reward
-            else:
-                Q_future = max(self.target_model.predict(new_state)[0])
-                target[0][action] = reward + Q_future * self.gamma
-            self.model.fit(state, target, epochs=1, verbose=0)
-
-    def target_train(self):
-        weights = self.model.get_weights()
-        target_weights = self.target_model.get_weights()
-        for i in range(len(target_weights)):
-            target_weights[i] = weights[i] * self.tau + target_weights[i] * (1 - self.tau)
-        self.target_model.set_weights(target_weights)
-
-    def save_model(self, fn):
-        self.model.save(fn)
-
-def dqn_train():
-    env     = gym.make("MountainCar-v0")
-    gamma   = 0.9
-    epsilon = .95
-
-    n_episodes  = 1000
-    n_steps = 500
-
-    # updateTargetNetwork = 1000
-    dqn_agent = DQN(env=env)
-    steps = []
-    for episode in range(n_episodes):
-        cur_state = env.reset().reshape(1,2)
-        for step in range(n_steps):
-            action = dqn_agent.act(cur_state)
-            new_state, reward, done, _ = env.step(action)
-
-            # reward = reward if not done else -20
-            new_state = new_state.reshape(1,2)
-            dqn_agent.remember(cur_state, action, reward, new_state, done)
-            
-            dqn_agent.replay()       # internally iterates default (prediction) model
-            dqn_agent.target_train() # iterates target model
-
-            cur_state = new_state
-            if done:
+                # set next state as current state
+                cur_state = new_state
+                if done:
+                    break
+            episode_reward_history = np.append(episode_reward_history,episode_reward)
+            print("Episode ",episode,"-> reward: ", episode_reward)
+            if (episode_reward >= self.solve_score):
+                print("Solved in ", episode, "episodes")
                 break
-        if step >= 199:
-            print("Failed to complete in episode {}".format(episode))
-            if step % 10 == 0:
-                dqn_agent.save_model("episode-{}.model".format(episode))
-        else:
-            print("Completed in {} trials".format(episode))
-            dqn_agent.save_model("success.model")
-            break
-    
-    cur_state = env.reset().reshape(1,2)
-    step=0
-    while(step < 200):
-        env.render()
-        action = dqn_agent.act(cur_state)
-        new_state, reward, is_done, _ = env.step(action)
-        cur_state = new_state.reshape(1,2)
-        step+=1
-        
-dqn_train()
+
+        dqn_agent.save_model("models/dqn-reward{}.model".format(episode_reward_history[-1]))
+
+        # render successful model
+        if (render):
+            cur_state = self.preprocess(self.env.reset())
+            is_done = False
+            while(not is_done):
+                self.env.render()
+                action = dqn_agent.act(cur_state)
+                new_state, reward, is_done, _ = self.env.step(action)
+                cur_state = self.preprocess(new_state)
+
+        return [episode_reward_history]
+
+    def evodqn_train(self, gamma=0.9,epsilon=0.95,n_episodes=100,n_steps=200, render=False, n_population=10,cross_rate=CROSS_RATE, mutation_rate=MUTATION_RATE,reward_bound=REWARD_BOUND):
+        # Init augmented reward object
+        obs_space_size = self.env.observation_space.high.size
+        action_space_size = self.env.action_space.n
+        self.evoRewardObject = evoReward.evoReward(DNA_bound=reward_bound, cross_rate=cross_rate,mutation_rate=mutation_rate, pop_size=n_population,obs_space_size=obs_space_size,action_size=action_space_size,dna_type=1)
+
+        # Init population of agents
+        dqn_agents = []
+        for n in range(n_population):
+            dqn_agents.append(DQN(env=self.env,gamma=gamma,epsilon=epsilon))
+
+        episode_reward_max_history = np.array([])
+        model_max = None
+        solved = False
+        for episode in range(n_episodes):            
+            episode_reward_population = np.array([])
+
+            for n in range(n_population):
+                cur_state = self.preprocess(self.env.reset())
+                episode_reward = 0.0
+                for step in range(n_steps):
+                    action = dqn_agents[n].act(cur_state)
+                    new_state, reward, done, _ = self.env.step(action)
+                    episode_reward += reward                    
+                    
+                    # augment reward
+                    reward += self.evoRewardObject.get_reward(n, action, cur_state.flatten())
+                    
+                    #train DQN
+                    new_state = self.preprocess(new_state)
+                    dqn_agents[n].remember(cur_state, action, reward, new_state, done)
+                    dqn_agents[n].replay()       # internally iterates default (prediction) model
+                    dqn_agents[n].target_train() # iterates target model
+
+                    # set new state as current
+                    cur_state = new_state
+                    if done:
+                        break
+
+                episode_reward_population = np.append(episode_reward_population,episode_reward)
+
+            # Add best reward to list
+            max_index = np.argmax(episode_reward_population)
+            episode_reward_max = episode_reward_population[max_index]
+            episode_reward_max_history = np.append(episode_reward_max_history,episode_reward_max)
+            print("Episode ",episode,"-> max_reward: ", episode_reward_population[max_index])
+
+            # If last episode or if solved , find best Q model
+            if (episode_reward_max >= self.solve_score):
+                solved = True
+            if (episode == n_episodes-1 or solved):
+                if (solved):
+                    print("Solved in ", episode, "episodes")
+                model_max = dqn_agents[max_index]
+                augmented_reward_max = self.evoRewardObject.get_DNA(max_index)
+                break
+
+            # Evolve rewards
+            self.evoRewardObject.set_fitness(np.array(episode_reward_population))
+            self.evoRewardObject.evolve()
+
+        model_max.save_model("models/evodqn-reward{}.model".format(episode_reward_max_history[-1]))
+
+        # render successful model
+        if (render):
+            cur_state = self.preprocess(self.env.reset())
+            is_done = False
+            while(not is_done):
+                self.env.render()
+                action = model_max.act(cur_state)
+                new_state, reward, is_done, _ = self.env.step(action)
+                cur_state = self.preprocess(new_state)
+
+        return [episode_reward_max_history,augmented_reward_max]
+
+    def preprocess(self,state):
+        return state.reshape(1,self.env.observation_space.high.size)
+
+import matplotlib.pyplot as plt
+
+atari = AtariTrain(env="CartPole-v0", solve_score=195.0)
+
+#[episode_rewards] =atari.dqn_train(n_episodes=50)
+#plt.plot(episode_rewards, label="DQN")
+
+n_population=5
+[episode_rewards,augment] =atari.evodqn_train(n_episodes=2, n_population=n_population)
+plt.plot(episode_rewards, label="DQN-evoReward, pop: "+str(n_population))
+
+plt.xlabel("Episode")
+plt.ylabel("Average Cumulative Reward")
+plt.legend(title="DQN type")
+plt.savefig("result.png")
