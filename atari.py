@@ -98,6 +98,47 @@ class AtariTrain:
         
         return state
     
+    ## Populate the experience memory           
+    def populate_memory_multiple(self, num_memories=1):
+        self.memory = []
+        states = []
+        for n in range(num_memories):
+            # Initialize the simulation
+            self.env.reset()
+            # Take one random step to get the pole and cart moving
+            state, reward, done, _ = self.env.step(self.env.action_space.sample())
+            state = self.preprocess(state)
+            
+            mem = Memory(max_size=memory_size)
+            
+            # Make a bunch of random actions and store the experiences
+            for ii in range(pretrain_length):
+                # Make a random action
+                action = self.env.action_space.sample()
+                next_state, reward, done, _ = self.env.step(action)
+                next_state = self.preprocess(next_state)
+            
+                if done:
+                    # The simulation fails so no next state
+                    next_state = np.zeros(state.shape)
+                    # Add experience to memory
+                    mem.add((state, action, reward, next_state))
+            
+                    # Start new episode
+                    self.env.reset()
+                    # Take one random step to get the pole and cart moving
+                    state, reward, done, _ = self.env.step(self.env.action_space.sample())
+                    state = self.preprocess(state)
+                else:
+                    # Add experience to memory
+                    mem.add((state, action, reward, next_state))
+                    state = next_state
+            
+            states.append(state)
+            self.memory.append(mem)
+        
+        return states
+    
     def preprocess(self, state):
         return state.reshape(1,self.env.observation_space.shape[0])
     
@@ -133,10 +174,6 @@ class AtariTrain:
                     # the episode ends so no next state
                     next_state = np.zeros(state.shape)
         
-                    print('Episode: {}'.format(ep),
-                          'Total reward: {}'.format(episode_reward),
-                          'Explore P: {:.4f}'.format(explore_p))
-        
                     # Add experience to memory
                     self.memory.add((state, action, reward, next_state))
         
@@ -171,7 +208,7 @@ class AtariTrain:
                 print('Episode {}\tAverage Score: {:.2f}\tCurrent Score: {:.2f}'.format(ep, np.mean(scores_deque),scores_deque[-1]))
             if np.mean(scores_deque)>=self.solve_score:
                 print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-100, np.mean(scores_deque)))
-                break            
+                break
 
         dqn_agent.model.save("models/dqn-reward{}.model".format(scores_deque[-1]))
 
@@ -188,62 +225,104 @@ class AtariTrain:
         return [np.array(scores)]
 
     def evodqn_train(self, n_episodes=1000,n_steps=200, render=False, n_population=10,cross_rate=CROSS_RATE, mutation_rate=MUTATION_RATE,reward_bound=REWARD_BOUND):
+        states = self.populate_memory_multiple(num_memories=n_population)
+        
         # Init augmented reward object
-        obs_space_size = self.env.observation_space.high.size
+        obs_space_size = self.env.observation_space.shape[0]
         action_space_size = self.env.action_space.n
         self.evoRewardObject = evoReward.evoReward(DNA_bound=reward_bound, cross_rate=cross_rate,mutation_rate=mutation_rate, pop_size=n_population,obs_space_size=obs_space_size,action_size=action_space_size,dna_type=1)
 
         # Init population of agents
         dqn_agents = []
         for n in range(n_population):
-            dqn_agents.append(DQN(env=self.env))
+            dqn_agents.append(QNetwork(hidden_size=hidden_size, learning_rate=learning_rate))
 
-        episode_reward_max_history = np.array([])
+        scores_deque = deque(maxlen=100)
+        scores = []
+        augmented_reward_max = None
         model_max = None
-        for episode in range(n_episodes):            
+        step = np.zeros(n_population)
+        for ep in range(1,n_episodes+1):            
             episode_reward_population = np.array([])
 
             for n in range(n_population):
                 cur_state = self.preprocess(self.env.reset())
                 episode_reward = 0.0
-                for step in range(n_steps):
-                    action = dqn_agents[n].act(cur_state)
-                    new_state, reward, done, _ = self.env.step(action)
-                    episode_reward += reward                    
+                step[n] = 0
+                state = states[n]
+                for t in range(1,n_steps+1):
+                    step[n] += 1
+                    # Explore or Exploit
+                    explore_p = explore_stop + (explore_start - explore_stop)*np.exp(-decay_rate*step[n])
+                    if explore_p > np.random.rand():
+                        # Make a random action
+                        action = self.env.action_space.sample()
+                    else:
+                        # Get action from Q-network
+                        Qs = dqn_agents[n].model.predict(state)[0]
+                        action = np.argmax(Qs)
+                        
+                    # step environment
+                    next_state, reward, done, _ = self.env.step(action)
+                    next_state = self.preprocess(next_state)
+                    episode_reward += reward
                     
                     # augment reward
-                    reward += self.evoRewardObject.get_reward(n, action, cur_state.flatten())
+                    reward += self.evoRewardObject.get_reward(n, action, cur_state.flatten())                    
                     
-                    #train DQN
-                    new_state = self.preprocess(new_state)
-                    dqn_agents[n].remember(cur_state, action, reward, new_state, done)
-                    dqn_agents[n].replay()       # internally iterates default (prediction) model
-                    dqn_agents[n].target_train() # iterates target model
-
-                    # set new state as current
-                    cur_state = new_state
                     if done:
+                        # the episode ends so no next state
+                        next_state = np.zeros(state.shape)
+            
+                        # Add experience to memory
+                        self.memory[n].add((state, action, reward, next_state))
+            
+                        # Start new episode
+                        self.env.reset()
+                        # Take one random step to get the pole and cart moving
+                        state, reward, done, _ = self.env.step(self.env.action_space.sample())
+                        state = self.preprocess(state)
                         break
-
+                    else:
+                        # Add experience to memory
+                        self.memory[n].add((state, action, reward, next_state))
+                        state = next_state
+    
+                    # Replay
+                    inputs = np.zeros((batch_size, 4))
+                    targets = np.zeros((batch_size, 2))                    
+                    
+                    minibatch = self.memory[n].sample(batch_size)
+                    for i, (state_b, action_b, reward_b, next_state_b) in enumerate(minibatch):
+                        inputs[i:i+1] = state_b
+                        target = reward_b
+                        if not (next_state_b == np.zeros(state_b.shape)).all(axis=1):
+                            target = reward_b + gamma * np.amax(dqn_agents[n].model.predict(next_state_b)[0])
+                        targets[i] = dqn_agents[n].model.predict(state_b)
+                        targets[i][action_b] = target
+                    dqn_agents[n].model.fit(inputs, targets, epochs=1, verbose=0)
+                    
                 episode_reward_population = np.append(episode_reward_population,episode_reward)
 
             # Add best reward to list
             max_index = np.argmax(episode_reward_population)
             episode_reward_max = episode_reward_population[max_index]
-            episode_reward_max_history = np.append(episode_reward_max_history,episode_reward_max)
-            print("Episode ",episode+1,"-> max_reward: ", episode_reward_population[max_index])
-
-            # If last episode, find best Q model
-            if (episode == n_episodes-1):
-                model_max = dqn_agents[max_index]
+            scores_deque.append(episode_reward_max)
+            scores.append(episode_reward_max) 
+            print("Episode ",ep,"-> max_reward: ", episode_reward_population[max_index])
+            
+            if (ep % PRINT_INTERVAL == 0):
+                print('Episode {}\tAverage Score: {:.2f}\tCurrent Score: {:.2f}'.format(ep, np.mean(scores_deque),scores_deque[-1]))
+            if np.mean(scores_deque)>=self.solve_score:
+                print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-100, np.mean(scores_deque)))
+                model_max = dqn_agents[max_index].model
+                model_max.save_model("models/evodqn-reward{}.model".format(scores_deque[-1]))
                 augmented_reward_max = self.evoRewardObject.get_DNA(max_index)
                 break
 
             # Evolve rewards
             self.evoRewardObject.set_fitness(np.array(episode_reward_population))
             self.evoRewardObject.evolve()
-
-        model_max.save_model("models/evodqn-reward{}.model".format(episode_reward_max_history[-1]))
 
         # render successful model
         if (render):
@@ -255,4 +334,4 @@ class AtariTrain:
                 new_state, reward, is_done, _ = self.env.step(action)
                 cur_state = self.preprocess(new_state)
 
-        return [episode_reward_max_history,augmented_reward_max]
+        return [np.array(scores),augmented_reward_max]
