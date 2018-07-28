@@ -308,8 +308,7 @@ class AtariTrain:
             max_index = np.argmax(episode_reward_population)
             episode_reward_max = episode_reward_population[max_index]
             scores_deque.append(episode_reward_max)
-            scores.append(episode_reward_max) 
-            print("Episode ",ep,"-> max_reward: ", episode_reward_population[max_index])
+            scores.append(episode_reward_max)
             
             if (ep % PRINT_INTERVAL == 0):
                 print('Episode {}\tAverage Score: {:.2f}\tCurrent Score: {:.2f}'.format(ep, np.mean(scores_deque),scores_deque[-1]))

@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 from atari import AtariTrain
 import numpy as np
+import time
 
-NUM_TRIALS = 10
+NUM_TRIALS = 1
 NUM_EPISODES = 1000
 SOLVED_REWARD_CRITERIA = 195.0
 
@@ -22,6 +23,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
     
     max_num_episodes_trial = NUM_EPISODES
     best_augment = None
+    time_start = time.time()
     for trial in range(NUM_TRIALS):
         print()
         print ("trial:", trial)
@@ -49,6 +51,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
     mean_rewards = np.average(episode_reward_trials,axis=0)    
     std_rewards = np.std(episode_reward_trials,axis=0)
     
+    time_end = time.time()
     # print stats
     with open('log.txt'+str(dqn_type), 'w') as f:
         print (file=f)
@@ -59,6 +62,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
         print ("Max:", np.max(episodes_to_solve),file=f)
         print ("Min:", np.min(episodes_to_solve),file=f)
         
+        print (file=f)
         print (">> Rewards:",file=f)
         print ("Mean:",file=f)
         print(mean_rewards,file=f)
@@ -68,6 +72,10 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
         if dqn_type == EVODQN_TYPE:
             print ("Best augment:",file=f)
             print (best_augment,file=f)
+            
+        print (file=f)
+        print (">> Time:",file=f)
+        print ((time_end-time_start)/60,file=f)
         print()
         
     return [episodes_to_solve,mean_rewards,std_rewards]
@@ -77,7 +85,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
 plt.errorbar(range(1,NUM_EPISODES+1),mean_rewards,yerr=std_rewards,label="DQN")
 
 # Trials DQN with evoReward
-n_population = 2
+n_population = 40
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials(dqn_type=EVODQN_TYPE,num_population=n_population)
 plt.errorbar(range(1,NUM_EPISODES+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
