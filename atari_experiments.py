@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 from atari import AtariTrain
 import numpy as np
-import math
 
 NUM_TRIALS = 2
 NUM_EPISODES = 5

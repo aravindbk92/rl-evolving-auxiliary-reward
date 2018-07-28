@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from gym import envs
+import gym
+import math
 
-print(envs.registry.all())
+env = gym.make('CartPole-v0')
+print (env.observation_space.shape[0])
