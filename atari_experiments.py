@@ -4,7 +4,7 @@ import numpy as np
 import math
 
 NUM_TRIALS = 2
-NUM_EPISODES = 1000
+NUM_EPISODES = 5
 SOLVED_REWARD_CRITERIA = 195.0
 
 DQN_TYPE = 0
@@ -31,7 +31,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
             [episode_rewards] = atari.dqn_train(n_episodes=NUM_EPISODES)
         
         # find in which episode it was solved for current trial
-        episodes_to_solve = np.append(episode_rewards.size)
+        episodes_to_solve = np.append(episodes_to_solve,episode_rewards.size)
 
         # find maximum number of episodes reached across trials
         if (episode_rewards.size < max_num_episodes_trial):
