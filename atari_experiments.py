@@ -3,7 +3,7 @@ from atari import AtariTrain
 import numpy as np
 import time
 
-NUM_TRIALS = 1
+NUM_TRIALS = 10
 NUM_EPISODES = 1000
 SOLVED_REWARD_CRITERIA = 195.0
 
@@ -12,7 +12,7 @@ EVODQN_TYPE = 1
 
 atari = AtariTrain(env="CartPole-v0", solve_score=SOLVED_REWARD_CRITERIA)
 
-def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
+def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
     episode_reward_trials = np.empty((0,NUM_EPISODES))
     episodes_to_solve = np.array([])
     
@@ -21,7 +21,8 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
     else:
         print ("----DQN with normal reward----")
     
-    max_num_episodes_trial = NUM_EPISODES
+    max_num_episodes_trial = 0
+    min_num_episodes_trial = NUM_EPISODES
     best_augment = None
     time_start = time.time()
     for trial in range(NUM_TRIALS):
@@ -37,13 +38,17 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
         episodes_to_solve = np.append(episodes_to_solve,episode_rewards.size)
 
         # find maximum number of episodes reached across trials
-        if (episode_rewards.size < max_num_episodes_trial):
+        if (episode_rewards.size > max_num_episodes_trial):
             max_num_episodes_trial = episode_rewards.size
+                
+        # find minimum number of episodes reached across trials
+        if (episode_rewards.size < min_num_episodes_trial):
+            min_num_episodes_trial = episode_rewards.size
             if dqn_type == EVODQN_TYPE:
                 best_augment = augment
-            
+                
         # append reward history from each trial
-        np.pad(episode_rewards,(0,NUM_EPISODES-episode_rewards.size),mode='constant',constant_values=SOLVED_REWARD_CRITERIA)
+        episode_rewards = np.pad(episode_rewards,(0,NUM_EPISODES-episode_rewards.size),mode='constant',constant_values=SOLVED_REWARD_CRITERIA)
         episode_reward_trials = np.append(episode_reward_trials,[episode_rewards],axis=0)
     
     # find mean and std
@@ -59,8 +64,8 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
         print (">> Episodes taken to solve (reach score: 195.0):",file=f)
         print ("Mean:", np.average(episodes_to_solve),file=f)
         print ("Std:", np.std(episodes_to_solve),file=f)
-        print ("Max:", np.max(episodes_to_solve),file=f)
-        print ("Min:", np.min(episodes_to_solve),file=f)
+        print ("Max:", max_num_episodes_trial,file=f)
+        print ("Min:", min_num_episodes_trial,file=f)
         
         print (file=f)
         print (">> Rewards:",file=f)
@@ -82,12 +87,12 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=40):
 
 ## Trials DQN
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials()
-plt.errorbar(range(1,NUM_EPISODES+1),mean_rewards,yerr=std_rewards,label="DQN")
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN")
 
 # Trials DQN with evoReward
-n_population = 40
+n_population = 30
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials(dqn_type=EVODQN_TYPE,num_population=n_population)
-plt.errorbar(range(1,NUM_EPISODES+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
 plt.xlabel("Episode")
 plt.ylabel("Average Cumulative Reward")

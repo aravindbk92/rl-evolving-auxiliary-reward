@@ -7,6 +7,8 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.optimizers import Adam
 
+np.random.seed(0)
+
 CROSS_RATE = 0.4                    # mating probability (DNA crossover)
 MUTATION_RATE = 0.01                # mutation probability
 REWARD_BOUND = [-10,10]               # Bounds for the augmented reward
@@ -62,6 +64,7 @@ class AtariTrain:
     def __init__(self,env="CartPole-v0",solve_score=195.0):
         self.env = gym.make(env)
         self.solve_score = solve_score
+        self.env.seed(0)
 
     ## Populate the experience memory           
     def populate_memory(self):    
@@ -203,7 +206,7 @@ class AtariTrain:
                 dqn_agent.model.fit(inputs, targets, epochs=1, verbose=0)
                 
             scores_deque.append(episode_reward)
-            scores.append(episode_reward)           
+            scores.append(episode_reward) 
             if (ep % PRINT_INTERVAL == 0):
                 print('Episode {}\tAverage Score: {:.2f}\tCurrent Score: {:.2f}'.format(ep, np.mean(scores_deque),scores_deque[-1]))
             if np.mean(scores_deque)>=self.solve_score:
@@ -315,7 +318,7 @@ class AtariTrain:
             if np.mean(scores_deque)>=self.solve_score:
                 print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-100, np.mean(scores_deque)))
                 model_max = dqn_agents[max_index].model
-                model_max.save_model("models/evodqn-reward{}.model".format(scores_deque[-1]))
+                model_max.save("models/evodqn-reward{}.model".format(scores_deque[-1]))
                 augmented_reward_max = self.evoRewardObject.get_DNA(max_index)
                 break
 
