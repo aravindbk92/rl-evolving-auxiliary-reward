@@ -297,6 +297,9 @@ class EvoDQNTrain:
                     next_state = self.preprocess(next_state)
                     episode_reward += reward
                     
+                    # augment reward 
+                    reward += self.evoRewardObject.get_reward(n, action, agent.state.flatten())                    
+                    
                     if done:
                         # the episode ends so no next state
                         next_state = np.zeros(agent.state.shape)
@@ -335,8 +338,8 @@ class EvoDQNTrain:
                 break
             
             # Evolve rewards
-            #self.evoRewardObject.set_fitness(np.array(episode_reward_population))
-            #self.evoRewardObject.evolve()
+            self.evoRewardObject.set_fitness(np.array(episode_reward_population))
+            self.evoRewardObject.evolve()
 
         # render successful model
         if (render):
