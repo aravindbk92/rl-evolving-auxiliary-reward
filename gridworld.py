@@ -14,7 +14,7 @@ MUTATION_RATE = 0.01                # mutation probability
 REWARD_BOUND = [-1,1]               # Bounds for the augmented reward
 EPSILON = 0.3
 PRINT_INTERVAL = 1
-LOGGING_MEAN_SIZE = 1
+LOGGING_MEAN_SIZE = 2
 DEBUG_STOP_EPISODE = np.random.randint(4,7)
 
 class QNetwork:
@@ -367,7 +367,7 @@ class EvoDQNTrain:
             if np.mean(scores_deque)>=self.solve_score:
                 print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-self.score_averaged_over, np.mean(scores_deque)))
                 model_max = dqn_agents[best_index]
-                model_max.qnetwork.model.save("models/evodqn-population-{}-{}.model".format(self.n_population, datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
+                model_max.qnetwork.model.save("models/grid_evodqn-population-{}-{}.model".format(self.n_population, datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
                 augmented_reward_max = self.evoRewardObject.get_DNA(best_index)
                 break
             

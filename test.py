@@ -3,15 +3,17 @@ import matplotlib.pyplot as plt
 import gym
 import math
 
-env = gym.make('CartPole-v0')
+AVERAGED_OVER = 20
 
-CON = 195
-def fun(x):
-    #y =  1-np.exp(2*((x-CON)/CON))
-    y = (1-(x/CON))**2
-    return y
-    
-fn = np.vectorize(fun)
-x = np.array(range(195))
+max_num_episodes_trial = 366-AVERAGED_OVER
+episode_reward_trials = np.load("plotted_values/evoreward_pop20_rewards.npy")
+episode_reward_trials = episode_reward_trials[:,:max_num_episodes_trial]
+mean_rewards = np.average(episode_reward_trials,axis=0)    
+std_rewards = np.std(episode_reward_trials,axis=0)
 
-plt.plot(fn(x))
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(20))
+
+plt.xlabel("Episode")
+plt.ylabel("Average Cumulative Reward")
+plt.legend(title="DQN type")
+plt.savefig("test.png")

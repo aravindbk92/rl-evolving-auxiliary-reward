@@ -6,7 +6,7 @@ import datetime
 
 NUM_TRIALS = 1
 NUM_EPISODES = 100
-SOLVED_REWARD_CRITERIA = 0.9
+SOLVED_REWARD_CRITERIA = 1.0
 AVERAGED_OVER = 10
 ENVIRONMENT = "MiniGrid-Empty-6x6-v0"
 
@@ -54,7 +54,14 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=20):
         episode_reward_trials = np.append(episode_reward_trials,[episode_rewards],axis=0)
         
         # Save rewards to file as backup
-        np.save("plotted_values/"+base_file_name+'_rewards.npy', episode_reward_trials)
+        trial_save_filename = "plotted_values/"+base_file_name+'_rewards.npy'
+        try:
+            old_trials = np.load(trial_save_filename)
+            episode_reward_trials = np.append(old_trials,episode_reward_trials)
+        except:
+            print('File does not exist yet')
+        
+        np.save(trial_save_filename, episode_reward_trials)
         
         # find time taken for each trial
         time_end = time.time()
@@ -72,6 +79,12 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=20):
     with open("logs/"+file_name+datetime.datetime.now().strftime("%d-%m-%y %H:%M"), 'w') as f:
         print (file=f)
         print ("--DQN stats--",file=f) if (dqn_type==DQN_TYPE) else print ("--DQN with evoRewards stats--",file=f)
+        print("NUM_TRIALS:",NUM_TRIALS,file=f)
+        print("ENVIRONMENT:",ENVIRONMENT,file=f)
+        print("AVERAGED_OVER:",AVERAGED_OVER,file=f)
+        print("NUM_EPISODES:",NUM_EPISODES,file=f)
+        print()
+        
         print (">> Episodes taken to solve (reach score: 195.0):",file=f)
         print ("Mean:", np.average(episodes_to_solve)-AVERAGED_OVER,file=f)
         print ("Std:", np.std(episodes_to_solve),file=f)
@@ -101,11 +114,11 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=20):
 # Trials DQN with evoReward
 n_population = 20
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials(dqn_type=EVODQN_TYPE, num_population=n_population)
-plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
 ## Trials DQN
-#[episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials()
-#plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN")
+[episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials()
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
 
 plt.xlabel("Episode")
 plt.ylabel("Average Cumulative Reward")

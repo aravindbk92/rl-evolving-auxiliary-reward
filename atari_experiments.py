@@ -98,14 +98,16 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=20):
         
     return [episodes_to_solve,mean_rewards,std_rewards]
 
-# Trials DQN with evoReward
+## Trials DQN with evoReward
 n_population = 20
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials(dqn_type=EVODQN_TYPE, num_population=n_population)
 plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
 # Trials DQN
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials()
 plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN")
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
 
 plt.xlabel("Episode")
 plt.ylabel("Average Cumulative Reward")
