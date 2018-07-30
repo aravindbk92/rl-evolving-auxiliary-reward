@@ -12,6 +12,8 @@ CROSS_RATE = 0.4                    # mating probability (DNA crossover)
 MUTATION_RATE = 0.01                # mutation probability
 REWARD_BOUND = [-10,10]               # Bounds for the augmented reward
 PRINT_INTERVAL = 10
+LOGGING_MEAN_SIZE = 5
+DEBUG_STOP_EPISODE = np.random.randint(4,7)
 
 class QNetwork:
     def __init__(self, learning_rate=0.01, state_size=4,
@@ -62,6 +64,8 @@ pretrain_length = batch_size   # number experiences to pretrain the memory
 class DQNTrain:
     def __init__(self,env="CartPole-v0",solve_score=195.0,score_averaged_over=50):
         self.env = gym.make(env)
+        self.obs_space_size = self.env.observation_space.shape[0]
+        self.action_space_size = self.env.action_space.n        
         self.solve_score = solve_score
         self.score_averaged_over = score_averaged_over
 
@@ -109,7 +113,8 @@ class DQNTrain:
         # init DQN agent
         dqn_agent = QNetwork(hidden_size=hidden_size, learning_rate=learning_rate)
 
-        scores_deque = deque(maxlen=100)
+        scores_deque = deque(maxlen=self.score_averaged_over)
+        scores_deque_logging = deque(maxlen=LOGGING_MEAN_SIZE)
         scores = []
         last_mean_reward = 0.0
         for ep in range(1,n_episodes+1):
@@ -150,8 +155,8 @@ class DQNTrain:
                     state = next_state
 
                 # Replay
-                inputs = np.zeros((batch_size, 4))
-                targets = np.zeros((batch_size, 2))                    
+                inputs = np.zeros((batch_size, self.obs_space_size))
+                targets = np.zeros((batch_size, self.action_space_size))                    
                 
                 minibatch = self.memory.sample(batch_size)
                 for i, (state_b, action_b, reward_b, next_state_b) in enumerate(minibatch):
@@ -164,16 +169,17 @@ class DQNTrain:
                 dqn_agent.model.fit(inputs, targets, epochs=1, verbose=0)
                 
             scores_deque.append(episode_reward)
+            scores_deque_logging.append(episode_reward)
             scores.append(episode_reward)
-            last_mean_reward = np.mean(scores[-10:])
+            last_mean_reward = np.mean(scores_deque_logging)
 
             if (ep % PRINT_INTERVAL == 0):
-                print('Episode {}\tAverage Score(100): {:.2f}\tAverage Score(10): {:.2f}\tExploration: {:.2f} '.format(ep, np.mean(scores_deque),last_mean_reward,explore_p))
+                print('Episode {}\tAverage Score({:d}): {:.2f}\tAverage Score(10): {:.2f}\tExploration: {:.2f} '.format(ep, self.score_averaged_over, np.mean(scores_deque),last_mean_reward,explore_p))
             if np.mean(scores_deque)>=self.solve_score:
-                print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-100, np.mean(scores_deque)))
+                print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-self.score_averaged_over, np.mean(scores_deque)))
                 break
 
-        dqn_agent.model.save("models/dqn-reward{}.model".format(scores_deque[-1]))
+        dqn_agent.model.save("models/dqn-reward-{}.model".format(datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
 
         # render successful model
         if (render):
@@ -191,11 +197,12 @@ class evoAgent:
     def __init__(self,env):
         self.env = gym.make(env)
         self.obs_space_size = self.env.observation_space.shape[0]
+        self.action_space_size = self.env.action_space.n
         self.qnetwork = QNetwork(hidden_size=hidden_size, learning_rate=learning_rate)
         self.memory = Memory(max_size=memory_size)
         self.state = self.populate_memory()
         self.last_mean_reward = 0.0
-        self.scores_deque_10 = deque(maxlen=10)
+        self.scores_deque_logging = deque(maxlen=LOGGING_MEAN_SIZE)
         self.explore_p = explore_start
         
     def preprocess(self, state):
@@ -235,8 +242,8 @@ class evoAgent:
     
     def model_train(self):
         # Replay
-        inputs = np.zeros((batch_size, 4))
-        targets = np.zeros((batch_size, 2))                    
+        inputs = np.zeros((batch_size, self.obs_space_size))
+        targets = np.zeros((batch_size, self.action_space_size))                    
         
         minibatch = self.memory.sample(batch_size)
         for i, (state_b, action_b, reward_b, next_state_b) in enumerate(minibatch):
@@ -266,7 +273,7 @@ class EvoDQNTrain:
     def preprocess(self, state):
         return state.reshape(1,self.obs_space_size)
     
-    def train(self, n_episodes=1000,n_steps=200, n_population=2, render=False):
+    def train(self, n_episodes=1000,n_steps=200, n_population=10, render=False):
         self.n_population = n_population
         
         # Init augmented reward object
@@ -275,15 +282,15 @@ class EvoDQNTrain:
         # Init population of agents
         dqn_agents = []
         for n in range(self.n_population):
-             dqn_agents.append(evoAgent(self.env_name))
+            dqn_agents.append(evoAgent(self.env_name))
 
         scores_deque = deque(maxlen=self.score_averaged_over)
-        scores_deque_10 = deque(maxlen=10)
+        scores_deque_logging = deque(maxlen=LOGGING_MEAN_SIZE)
         best_agent_scores = []
         scores = []
         augmented_reward_max = None
         model_max = None
-        agent_mean = np.array(self.n_population)
+        agent_mean = np.zeros(self.n_population)
         for ep in range(1,n_episodes+1):
             episode_reward_population = np.array([])
             
@@ -331,14 +338,14 @@ class EvoDQNTrain:
                     agent.model_train()
                     
                 episode_reward_population = np.append(episode_reward_population,episode_reward)
-                agent.scores_deque_10.append(episode_reward)
-                agent.last_mean_reward = np.mean(agent.scores_deque_10)
+                agent.scores_deque_logging.append(episode_reward)
+                agent.last_mean_reward = np.mean(agent.scores_deque_logging)
                 agent_mean[n] = agent.last_mean_reward
 
             # Add max reward to list
             max_index = np.argmax(episode_reward_population)            
             episode_reward_max = episode_reward_population[max_index]
-            scores_deque_10.append(episode_reward_max)
+            scores_deque_logging.append(episode_reward_max)
             scores_deque.append(episode_reward_max)            
             scores.append(episode_reward_max)
             
@@ -347,7 +354,7 @@ class EvoDQNTrain:
             best_agent_scores.append(episode_reward_population[best_index])
             
             if (ep % PRINT_INTERVAL == 0):                
-                print('Episode {}\tAvg All({:d}): {:.2f}\tAvg All(10): {:.2f}\tAvg(10) Best Agent: {:.2f} '.format(ep, self.score_averaged_over,np.mean(scores_deque),np.mean(scores_deque_10),np.max(agent_mean)))                
+                print('Episode {}\tAvg All({:d}): {:.2f}\tAvg All(10): {:.2f}\tAvg(10) Best Agent: {:.2f} '.format(ep, self.score_averaged_over,np.mean(scores_deque),np.mean(scores_deque_logging),np.max(agent_mean)))                
             if np.mean(scores_deque)>=self.solve_score:
                 print('Environment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(ep-self.score_averaged_over, np.mean(scores_deque)))
                 model_max = dqn_agents[best_index]

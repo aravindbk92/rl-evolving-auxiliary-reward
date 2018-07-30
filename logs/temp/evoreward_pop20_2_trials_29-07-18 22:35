@@ -1,0 +1,21 @@
+
+--DQN with evoRewards stats--
+>> Episodes taken to solve (reach score: 195.0):
+Mean: -14.0
+Std: 0.0
+Max: -14
+Min: -14
+
+>> Rewards:
+Mean:
+[ 57.5  56.5  80.   96.5  73.5 118. ]
+Std:
+[ 8.5  3.5 23.   2.5  0.5  6. ]
+Best augment:
+[[  5 -10  -1  -4]
+ [  2  -8   9   2]]
+
+>> Time:
+Trial  1 :  1.162066435813904
+Trial  2 :  2.0136019547780353
+>>Total time taken:  3.175668390591939

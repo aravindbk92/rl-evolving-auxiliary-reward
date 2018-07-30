@@ -2,26 +2,21 @@ import matplotlib.pyplot as plt
 from atari import DQNTrain, EvoDQNTrain
 import numpy as np
 import time
+import datetime
 
-NUM_TRIALS = 2
+NUM_TRIALS = 10
 NUM_EPISODES = 1000
 SOLVED_REWARD_CRITERIA = 195.0
-AVERAGED_OVER = 50
+AVERAGED_OVER = 20
+ENVIRONMENT = "CartPole-v0"
 
 DQN_TYPE = 0
 EVODQN_TYPE = 1
 
-def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
+def run_dqn_trials(dqn_type=DQN_TYPE, num_population=20):
     episode_reward_trials = np.empty((0,NUM_EPISODES))
     episodes_to_solve = np.array([])
-    
-    dqnobject=None
-    if dqn_type == EVODQN_TYPE:
-        print ("----DQN with augmented reward----")
-        dqnobject = EvoDQNTrain(env="CartPole-v0", solve_score=SOLVED_REWARD_CRITERIA)
-    else:
-        print ("----DQN with normal reward----")
-        dqnobject = DQNTrain(env="CartPole-v0", solve_score=SOLVED_REWARD_CRITERIA)
+    base_file_name = ('evoreward_pop'+str(num_population) if dqn_type == EVODQN_TYPE else 'dqn')
     
     max_num_episodes_trial = 0
     min_num_episodes_trial = NUM_EPISODES
@@ -30,12 +25,16 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
     for trial in range(NUM_TRIALS):
         print()
         print ("Trial:", trial)
-        time_start = time.time()        
-        
+        time_start = time.time()
+
         if dqn_type == EVODQN_TYPE:
+            print ("----DQN with augmented reward----")
+            dqnobject = EvoDQNTrain(env=ENVIRONMENT, solve_score=SOLVED_REWARD_CRITERIA,score_averaged_over=AVERAGED_OVER)
             [episode_rewards,best_agent_rewards,augment] = dqnobject.train(n_episodes=NUM_EPISODES,n_population=num_population)
         else:
-            [episode_rewards] = dqnobject.train(n_episodes=NUM_EPISODES)
+            print ("----DQN with normal reward----")
+            dqnobject = DQNTrain(env=ENVIRONMENT, solve_score=SOLVED_REWARD_CRITERIA,score_averaged_over=AVERAGED_OVER)        
+            [episode_rewards] = dqnobject.train(n_episodes=NUM_EPISODES)    
         
         # find in which episode it was solved for current trial
         episodes_to_solve = np.append(episodes_to_solve,episode_rewards.size)
@@ -54,6 +53,9 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
         episode_rewards = np.pad(episode_rewards,(0,NUM_EPISODES-episode_rewards.size),mode='constant',constant_values=SOLVED_REWARD_CRITERIA)
         episode_reward_trials = np.append(episode_reward_trials,[episode_rewards],axis=0)
         
+        # Save rewards to file as backup
+        np.save("plotted_values/"+base_file_name+'_rewards.npy', episode_reward_trials)
+        
         # find time taken for each trial
         time_end = time.time()
         time_taken = (time_end-time_start)/60
@@ -65,10 +67,9 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
     mean_rewards = np.average(episode_reward_trials,axis=0)    
     std_rewards = np.std(episode_reward_trials,axis=0)
     
-    # print stats
-    file_name = ('logs/log_evoreward_pop'+str(num_population) if dqn_type == EVODQN_TYPE else 'log_dqn')
-    file_name += "_"+str(NUM_TRIALS)+"_trials"
-    with open(file_name, 'w') as f:
+    # Save stats to log    
+    file_name = base_file_name + "_"+str(NUM_TRIALS)+"_trials_"
+    with open("logs/"+file_name+datetime.datetime.now().strftime("%d-%m-%y %H:%M"), 'w') as f:
         print (file=f)
         print ("--DQN stats--",file=f) if (dqn_type==DQN_TYPE) else print ("--DQN with evoRewards stats--",file=f)
         print (">> Episodes taken to solve (reach score: 195.0):",file=f)
@@ -98,7 +99,7 @@ def run_dqn_trials(dqn_type=DQN_TYPE, num_population=30):
     return [episodes_to_solve,mean_rewards,std_rewards]
 
 # Trials DQN with evoReward
-n_population = 10
+n_population = 20
 [episodes_to_solve,mean_rewards,std_rewards] = run_dqn_trials(dqn_type=EVODQN_TYPE, num_population=n_population)
 plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
