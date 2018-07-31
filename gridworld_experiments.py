@@ -34,7 +34,8 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",dqn_type=DQN_TYPE, num_populat
     episode_reward_trials = np.append(episode_reward_trials,[episode_rewards],axis=0)
     
     # Save rewards to file as backup
-    trial_save_filename = "plotted_values/"+base_filename +'.npy'
+    trial_save_filename = "plotted_values/"+base_filename + 'maxrewards.npy'
+    bestagent_save_filename = "plotted_values/"+base_filename + 'agentrewards.npy'
 #    try:
 #        old_trials = np.load(trial_save_filename)
 #        trials_completed = old_trials.shape[0]+1
@@ -42,6 +43,8 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",dqn_type=DQN_TYPE, num_populat
 #    except:
 #        print('File does not exist yet')        
     np.save(trial_save_filename, episode_reward_trials)
+    if dqn_type == EVODQN_TYPE:
+        np.save(bestagent_save_filename, best_agent_rewards)
     
     # find time taken for each trial
     time_end = time.time()
@@ -62,17 +65,15 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",dqn_type=DQN_TYPE, num_populat
 #        print(mean_rewards,file=f)
 #        print ("Std:",file=f)
 #        print (std_rewards,file=f)
-        
-        if (dqn_type == EVODQN_TYPE):
-            print(best_agent_rewards, file=f)
             
         print ("Best augment:",file=f)
         print (augment,file=f)
             
         print (file=f)
         print (">> Time:",file=f)
-        print (">>Total time taken: ", time_taken, file=f)
-        print('Finished ' + env_id + ' in ' + time_taken + "minutes")
+        print ("Total time taken: ", str(time_taken), file=f)
+        print('>>>>Finished ' + env_id + ' in ' + str(time_taken) + " minutes")
+        print()
 
 parser = argparse.ArgumentParser("simple_example")
 parser.add_argument("--env", help="String with env id", type=str, default="MiniGrid-Empty-6x6-v0")

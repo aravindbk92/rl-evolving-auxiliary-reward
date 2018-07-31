@@ -294,10 +294,10 @@ class EvoDQNTrain:
         #max steps
         n_steps = dqn_agents[0].env.max_steps;            
 
-        scores_deque = deque(maxlen=self.score_averaged_over)
         best_agent_scores = []
         best_agent_scores_dequeue = deque(maxlen=self.score_averaged_over)
         scores = []
+        scores_deque = deque(maxlen=self.score_averaged_over)
         augmented_reward_max = None
         model_max = None
         agent_mean = np.zeros(self.n_population)
