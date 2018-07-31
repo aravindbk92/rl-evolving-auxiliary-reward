@@ -75,9 +75,21 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",dqn_type=DQN_TYPE, num_populat
         print('>>>>Finished ' + env_id + ' in ' + str(time_taken) + " minutes")
         print()
 
+    # plot figure
+    mean_rewards = np.average(episode_reward_trials,axis=0)    
+    std_rewards = np.std(episode_reward_trials,axis=0)
+
+    plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(num_population))
+                 
+    plt.xlabel("Episode")
+    plt.ylabel("Average Cumulative Reward")
+    plt.legend(title="DQN type")
+    plt.savefig(base_filename+"result.png")    
+
+
 parser = argparse.ArgumentParser("simple_example")
 parser.add_argument("--env", help="String with env id", type=str, default="MiniGrid-Empty-6x6-v0")
-parser.add_argument("--n_pop", help="Number of population of agents", type=int, default=10)
+parser.add_argument("--n_pop", help="Number of population of agents", type=int, default=40)
 args = parser.parse_args()
 env = args.env
 n_population = args.n_pop

@@ -4,6 +4,7 @@ import evoReward
 import numpy as np
 from collections import deque
 import datetime
+import time
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -15,6 +16,7 @@ REWARD_BOUND = [-5,5]               # Bounds for the augmented reward
 EPSILON = 0.3
 PRINT_INTERVAL = 1
 LOGGING_MEAN_SIZE = 5
+REWARD_MULTIPLIER = 100
 
 class QNetwork:
     def __init__(self, learning_rate=0.01, state_size=4,
@@ -137,6 +139,7 @@ class DQNTrain:
                     
                 # step environment
                 next_state, reward, done, _ = self.env.step(action)
+                reward=reward * REWARD_MULTIPLIER
                 next_state = self.preprocess(next_state)
                 episode_reward += reward
                 
@@ -303,7 +306,8 @@ class EvoDQNTrain:
         agent_mean = np.zeros(self.n_population)
         for ep in range(1,n_episodes+1):
             episode_reward_population = np.array([])
-            
+            time_start = time.time()
+
             for n in range(n_population):
                 episode_reward = 0.0
                 agent = dqn_agents[n]
@@ -320,11 +324,12 @@ class EvoDQNTrain:
                         action = np.argmax(Qs)
                         
                     # step environment
-                    next_state, reward, done, _ = agent.env.step(action)
+                    next_state, reward, done, _ = agent.env.step(action)                    
                     next_state = self.preprocess(next_state)
-                    episode_reward += reward
+                    episode_reward += reward                    
                     
                     # augment reward 
+                    reward=reward * REWARD_MULTIPLIER
                     reward += self.evoRewardObject.get_reward(n, action, agent.state.flatten())                    
                     
                     if done:
@@ -362,10 +367,14 @@ class EvoDQNTrain:
             episode_reward_max = episode_reward_population[max_index]
             scores_deque.append(episode_reward_max)            
             scores.append(episode_reward_max)
+
+            # find time taken for each trial
+            time_end = time.time()
+            time_taken = (time_end-time_start)/60            
             
             if (ep % PRINT_INTERVAL == 0):   
                 with open(self.log_file, 'a+') as f:
-                    print('Episode {}\tAvgMax({:d}): {:.2f}\tCurrentMax: {:.2f}\tAvgBestAgent({:d}): {:.2f}\tCurrentBestAgent: {:.2f}'.format(ep, self.score_averaged_over,np.mean(scores_deque), episode_reward_max,self.score_averaged_over,np.mean(best_agent_scores_dequeue),best_agent_score),file=f)
+                    print('Episode {}\tAvgMax({:d}): {:.2f}\tCurrentMax: {:.2f}\tAvgBestAgent({:d}): {:.2f}\tCurrentBestAgent: {:.2f}\tTime: {:.2f}'.format(ep, self.score_averaged_over,np.mean(scores_deque), episode_reward_max,self.score_averaged_over,np.mean(best_agent_scores_dequeue),best_agent_score,time_taken),file=f)
             if ep == n_episodes:
                 model_max = dqn_agents[best_index]
                 model_max.qnetwork.model.save("models/grid_evodqn-population-{}-{}.model".format(self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
@@ -373,7 +382,7 @@ class EvoDQNTrain:
                 break
             
             # Evolve rewards
-            self.evoRewardObject.set_fitness(episode_reward_population)
+            self.evoRewardObject.set_fitness(agent_mean)
             self.evoRewardObject.evolve()
 
         # render successful model
