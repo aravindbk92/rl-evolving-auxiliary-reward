@@ -1,0 +1,55 @@
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 20
+Episode 1	AvgMax(10): 0.29	CurrentMax: 0.29	AvgBestAgent(10): 0.29	CurrentBestAgent: 0.29	Time: 0.32
+Episode 2	AvgMax(10): 0.54	CurrentMax: 0.78	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.78	Time: 0.36
+Episode 3	AvgMax(10): 0.61	CurrentMax: 0.74	AvgBestAgent(10): 0.59	CurrentBestAgent: 0.70	Time: 0.35
+Episode 4	AvgMax(10): 0.69	CurrentMax: 0.93	AvgBestAgent(10): 0.67	CurrentBestAgent: 0.91	Time: 0.33
+Episode 5	AvgMax(10): 0.72	CurrentMax: 0.85	AvgBestAgent(10): 0.71	CurrentBestAgent: 0.85	Time: 0.36
+Episode 6	AvgMax(10): 0.71	CurrentMax: 0.64	AvgBestAgent(10): 0.59	CurrentBestAgent: 0.00	Time: 0.36
+Episode 7	AvgMax(10): 0.73	CurrentMax: 0.91	AvgBestAgent(10): 0.62	CurrentBestAgent: 0.79	Time: 0.29
+Episode 8	AvgMax(10): 0.76	CurrentMax: 0.91	AvgBestAgent(10): 0.63	CurrentBestAgent: 0.72	Time: 0.27
+Episode 9	AvgMax(10): 0.78	CurrentMax: 0.93	AvgBestAgent(10): 0.56	CurrentBestAgent: 0.00	Time: 0.28
+Episode 10	AvgMax(10): 0.79	CurrentMax: 0.91	AvgBestAgent(10): 0.60	CurrentBestAgent: 0.91	Time: 0.30
+Episode 11	AvgMax(10): 0.85	CurrentMax: 0.91	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.00	Time: 0.33
+Episode 12	AvgMax(10): 0.87	CurrentMax: 0.94	AvgBestAgent(10): 0.52	CurrentBestAgent: 0.29	Time: 0.33
+Episode 13	AvgMax(10): 0.88	CurrentMax: 0.92	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.91	Time: 0.29
+Episode 14	AvgMax(10): 0.88	CurrentMax: 0.93	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.93	Time: 0.30
+Episode 15	AvgMax(10): 0.89	CurrentMax: 0.94	AvgBestAgent(10): 0.55	CurrentBestAgent: 0.94	Time: 0.30
+Episode 16	AvgMax(10): 0.89	CurrentMax: 0.61	AvgBestAgent(10): 0.55	CurrentBestAgent: 0.00	Time: 0.36
+Episode 17	AvgMax(10): 0.89	CurrentMax: 0.92	AvgBestAgent(10): 0.47	CurrentBestAgent: 0.00	Time: 0.36
+Episode 18	AvgMax(10): 0.88	CurrentMax: 0.84	AvgBestAgent(10): 0.48	CurrentBestAgent: 0.84	Time: 0.38
+Episode 19	AvgMax(10): 0.88	CurrentMax: 0.91	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.91	Time: 0.36
+Episode 20	AvgMax(10): 0.88	CurrentMax: 0.90	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.90	Time: 0.37
+
+>> Rewards over last 1 trial(s)
+Last:
+[[0.29375 0.78125 0.74375 0.925   0.85    0.6375  0.9125  0.90625 0.925
+  0.90625 0.9125  0.9375  0.91875 0.93125 0.94375 0.6125  0.91875 0.8375
+  0.90625 0.9    ]]
+Best augment:
+[[ 3  2  2  3  3  3  1  3 -2 -5 -3 -5 -2 -2  2 -4 -3  4  3 -3  2 -3 -1 -4
+   0  0  2 -4  3 -5  4  4  4  2  1  4  3 -1  3 -4 -1 -1 -2  0  4 -3  0 -5
+   4]
+ [-2  0  4  3  4 -3 -3 -2  1  2 -2 -4  0 -3 -3 -5  0  0  1  0  4  3 -5  4
+  -2  4  0 -4  1 -5 -1  1 -3 -2  3 -5 -5  2 -5  0 -1 -2 -2  1  3  3 -1 -5
+   3]
+ [ 2  3 -2  2  2  2 -5  1  1  1 -5  2 -4 -4 -2  4 -4  3 -1 -5  0  2  4  3
+  -2 -3  3  2 -4  2  1  4  2 -2 -4  0  3  3 -5  2  0 -4 -5  0  4  3  0 -1
+  -2]
+ [-5 -4 -2 -3  1  1 -1  3  0 -2 -4 -5  1  4 -1  2  1  3 -1  1 -5  3 -4  3
+  -3 -4  2 -2  1  4 -5 -3 -4  1 -2 -5  3 -5 -4  1  2  3  1 -5 -4 -5 -4 -1
+  -1]
+ [-4  1  1  2  4  3 -5 -3  3 -4  0  3  3 -2 -2  0  0  4 -4  2 -2 -4  4 -2
+   0  1  3  0 -2 -5  4 -5 -2  4 -1  1 -2 -4 -1 -1  1  3 -3  2 -2  0 -5 -5
+  -1]
+ [-4  4  1 -5 -4 -5 -5  0 -1  1 -1  0  0 -3  0 -4  0  1 -4 -3  2  1  0 -1
+   4  3 -1 -1  1 -3  2 -2  1 -4 -4 -5  1 -1 -5  1 -4  3 -3 -1 -3 -4  3 -3
+   3]
+ [-3  4 -2 -3  4 -1  0  3 -2  3  1  1 -4 -1 -1  4 -4 -3 -5 -5  2  3  4  2
+  -1 -3  0  0 -3 -5  4 -1 -5 -5 -1  1 -4  4 -4 -4 -5  3 -4 -3  2  4  2  1
+  -4]]
+
+>> Time:
+Total time taken:  6.588355294863383

@@ -17,6 +17,7 @@ EPSILON = 0.3
 PRINT_INTERVAL = 1
 LOGGING_MEAN_SIZE = 5
 REWARD_MULTIPLIER = 100
+SOLVE_SCORE = 0.90
 
 class QNetwork:
     def __init__(self, learning_rate=0.01, state_size=4,
@@ -139,9 +140,8 @@ class DQNTrain:
                     
                 # step environment
                 next_state, reward, done, _ = self.env.step(action)
-                reward=reward * REWARD_MULTIPLIER
                 next_state = self.preprocess(next_state)
-                episode_reward += reward
+                episode_reward += reward                
                 
                 if done:
                     # the episode ends so no next state
@@ -377,7 +377,7 @@ class EvoDQNTrain:
                     print('Episode {}\tAvgMax({:d}): {:.2f}\tCurrentMax: {:.2f}\tAvgBestAgent({:d}): {:.2f}\tCurrentBestAgent: {:.2f}\tTime: {:.2f}'.format(ep, self.score_averaged_over,np.mean(scores_deque), episode_reward_max,self.score_averaged_over,np.mean(best_agent_scores_dequeue),best_agent_score,time_taken),file=f)
             if ep == n_episodes:
                 model_max = dqn_agents[best_index]
-                model_max.qnetwork.model.save("models/grid_evodqn-population-{}-{}.model".format(self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
+                #model_max.qnetwork.model.save("models/grid_evodqn-population{}-{}-{}.model".format(self.n_population,self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M:%S")))
                 augmented_reward_max = self.evoRewardObject.get_DNA(best_index)
                 break
             

@@ -1,0 +1,658 @@
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+
+--evoDQN stats--
+ENVIRONMENT: MiniGrid-Empty-6x6-v0
+AVERAGED_OVER: 10
+NUM_EPISODES: 25
+Episode 1	AvgMax(10): 0.52	CurrentMax: 0.52	AvgBestAgent(10): 0.52	CurrentBestAgent: 0.52	Time: 0.67
+Episode 1	AvgMax(10): 0.38	CurrentMax: 0.38	AvgBestAgent(10): 0.38	CurrentBestAgent: 0.38	Time: 0.77
+Episode 1	AvgMax(10): 0.48	CurrentMax: 0.48	AvgBestAgent(10): 0.48	CurrentBestAgent: 0.48	Time: 0.78
+Episode 1	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.83
+Episode 1	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.82
+Episode 1	AvgMax(10): 0.47	CurrentMax: 0.47	AvgBestAgent(10): 0.47	CurrentBestAgent: 0.47	Time: 0.77
+Episode 1	AvgMax(10): 0.56	CurrentMax: 0.56	AvgBestAgent(10): 0.56	CurrentBestAgent: 0.56	Time: 0.80
+Episode 1	AvgMax(10): 0.62	CurrentMax: 0.62	AvgBestAgent(10): 0.62	CurrentBestAgent: 0.62	Time: 0.78
+Episode 2	AvgMax(10): 0.72	CurrentMax: 0.91	AvgBestAgent(10): 0.72	CurrentBestAgent: 0.91	Time: 0.93
+Episode 2	AvgMax(10): 0.70	CurrentMax: 0.92	AvgBestAgent(10): 0.70	CurrentBestAgent: 0.92	Time: 0.96
+Episode 2	AvgMax(10): 0.59	CurrentMax: 0.62	AvgBestAgent(10): 0.59	CurrentBestAgent: 0.62	Time: 0.94
+Episode 2	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.19	CurrentBestAgent: 0.00	Time: 1.06
+Episode 2	AvgMax(10): 0.52	CurrentMax: 0.57	AvgBestAgent(10): 0.44	CurrentBestAgent: 0.41	Time: 0.98
+Episode 2	AvgMax(10): 0.17	CurrentMax: 0.33	AvgBestAgent(10): 0.17	CurrentBestAgent: 0.33	Time: 1.04
+Episode 2	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 1.05
+Episode 2	AvgMax(10): 0.61	CurrentMax: 0.60	AvgBestAgent(10): 0.61	CurrentBestAgent: 0.60	Time: 1.03
+Episode 3	AvgMax(10): 0.78	CurrentMax: 0.90	AvgBestAgent(10): 0.78	CurrentBestAgent: 0.90	Time: 0.89
+Episode 3	AvgMax(10): 0.72	CurrentMax: 0.76	AvgBestAgent(10): 0.72	CurrentBestAgent: 0.76	Time: 0.89
+Episode 3	AvgMax(10): 0.62	CurrentMax: 0.82	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.82	Time: 0.93
+Episode 3	AvgMax(10): 0.33	CurrentMax: 0.62	AvgBestAgent(10): 0.33	CurrentBestAgent: 0.62	Time: 0.99
+Episode 3	AvgMax(10): 0.39	CurrentMax: 0.00	AvgBestAgent(10): 0.39	CurrentBestAgent: 0.00	Time: 1.06
+Episode 3	AvgMax(10): 0.72	CurrentMax: 0.93	AvgBestAgent(10): 0.72	CurrentBestAgent: 0.93	Time: 0.98
+Episode 3	AvgMax(10): 0.11	CurrentMax: 0.00	AvgBestAgent(10): 0.11	CurrentBestAgent: 0.00	Time: 1.06
+Episode 3	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 1.04
+Episode 4	AvgMax(10): 0.81	CurrentMax: 0.89	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.29	Time: 0.79
+Episode 4	AvgMax(10): 0.72	CurrentMax: 0.70	AvgBestAgent(10): 0.61	CurrentBestAgent: 0.27	Time: 0.73
+Episode 4	AvgMax(10): 0.54	CurrentMax: 0.29	AvgBestAgent(10): 0.50	CurrentBestAgent: 0.29	Time: 1.01
+Episode 4	AvgMax(10): 0.76	CurrentMax: 0.88	AvgBestAgent(10): 0.76	CurrentBestAgent: 0.88	Time: 0.88
+Episode 4	AvgMax(10): 0.25	CurrentMax: 0.00	AvgBestAgent(10): 0.25	CurrentBestAgent: 0.00	Time: 1.04
+Episode 4	AvgMax(10): 0.40	CurrentMax: 0.41	AvgBestAgent(10): 0.29	CurrentBestAgent: 0.00	Time: 0.98
+Episode 5	AvgMax(10): 0.76	CurrentMax: 0.93	AvgBestAgent(10): 0.67	CurrentBestAgent: 0.93	Time: 0.46
+Episode 4	AvgMax(10): 0.11	CurrentMax: 0.44	AvgBestAgent(10): 0.11	CurrentBestAgent: 0.44	Time: 1.00
+Episode 4	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 1.04
+Episode 5	AvgMax(10): 0.82	CurrentMax: 0.89	AvgBestAgent(10): 0.70	CurrentBestAgent: 0.89	Time: 0.71
+Episode 6	AvgMax(10): 0.79	CurrentMax: 0.92	AvgBestAgent(10): 0.56	CurrentBestAgent: 0.00	Time: 0.71
+Episode 6	AvgMax(10): 0.84	CurrentMax: 0.94	AvgBestAgent(10): 0.71	CurrentBestAgent: 0.77	Time: 0.64
+Episode 5	AvgMax(10): 0.79	CurrentMax: 0.94	AvgBestAgent(10): 0.79	CurrentBestAgent: 0.94	Time: 0.94
+Episode 5	AvgMax(10): 0.47	CurrentMax: 0.20	AvgBestAgent(10): 0.40	CurrentBestAgent: 0.00	Time: 1.03
+Episode 5	AvgMax(10): 0.23	CurrentMax: 0.71	AvgBestAgent(10): 0.23	CurrentBestAgent: 0.71	Time: 0.94
+Episode 5	AvgMax(10): 0.20	CurrentMax: 0.00	AvgBestAgent(10): 0.20	CurrentBestAgent: 0.00	Time: 1.05
+Episode 5	AvgMax(10): 0.32	CurrentMax: 0.00	AvgBestAgent(10): 0.23	CurrentBestAgent: 0.00	Time: 1.06
+Episode 5	AvgMax(10): 0.19	CurrentMax: 0.63	AvgBestAgent(10): 0.19	CurrentBestAgent: 0.63	Time: 0.96
+Episode 7	AvgMax(10): 0.81	CurrentMax: 0.94	AvgBestAgent(10): 0.61	CurrentBestAgent: 0.91	Time: 0.71
+Episode 7	AvgMax(10): 0.83	CurrentMax: 0.77	AvgBestAgent(10): 0.61	CurrentBestAgent: 0.00	Time: 0.84
+Episode 6	AvgMax(10): 0.82	CurrentMax: 0.95	AvgBestAgent(10): 0.82	CurrentBestAgent: 0.95	Time: 0.82
+Episode 6	AvgMax(10): 0.51	CurrentMax: 0.69	AvgBestAgent(10): 0.33	CurrentBestAgent: 0.00	Time: 0.98
+Episode 6	AvgMax(10): 0.40	CurrentMax: 0.81	AvgBestAgent(10): 0.33	CurrentBestAgent: 0.81	Time: 0.97
+Episode 8	AvgMax(10): 0.82	CurrentMax: 0.92	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.29	Time: 0.61
+Episode 6	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.19	CurrentBestAgent: 0.00	Time: 1.04
+Episode 6	AvgMax(10): 0.17	CurrentMax: 0.00	AvgBestAgent(10): 0.17	CurrentBestAgent: 0.00	Time: 1.04
+Episode 6	AvgMax(10): 0.25	CurrentMax: 0.55	AvgBestAgent(10): 0.25	CurrentBestAgent: 0.55	Time: 1.01
+Episode 8	AvgMax(10): 0.84	CurrentMax: 0.93	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.93	Time: 0.70
+Episode 7	AvgMax(10): 0.83	CurrentMax: 0.89	AvgBestAgent(10): 0.83	CurrentBestAgent: 0.88	Time: 0.73
+Episode 9	AvgMax(10): 0.83	CurrentMax: 0.93	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.54	Time: 0.64
+Episode 7	AvgMax(10): 0.55	CurrentMax: 0.83	AvgBestAgent(10): 0.28	CurrentBestAgent: 0.00	Time: 0.90
+Episode 7	AvgMax(10): 0.41	CurrentMax: 0.44	AvgBestAgent(10): 0.35	CurrentBestAgent: 0.44	Time: 0.98
+Episode 9	AvgMax(10): 0.85	CurrentMax: 0.86	AvgBestAgent(10): 0.58	CurrentBestAgent: 0.00	Time: 0.71
+Episode 7	AvgMax(10): 0.21	CurrentMax: 0.32	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 1.02
+Episode 7	AvgMax(10): 0.14	CurrentMax: 0.00	AvgBestAgent(10): 0.14	CurrentBestAgent: 0.00	Time: 1.05
+Episode 7	AvgMax(10): 0.22	CurrentMax: 0.00	AvgBestAgent(10): 0.22	CurrentBestAgent: 0.00	Time: 1.05
+Episode 10	AvgMax(10): 0.84	CurrentMax: 0.93	AvgBestAgent(10): 0.60	CurrentBestAgent: 0.93	Time: 0.52
+Episode 10	AvgMax(10): 0.85	CurrentMax: 0.89	AvgBestAgent(10): 0.59	CurrentBestAgent: 0.71	Time: 0.46
+Episode 8	AvgMax(10): 0.73	CurrentMax: 0.00	AvgBestAgent(10): 0.72	CurrentBestAgent: 0.00	Time: 1.07
+Episode 8	AvgMax(10): 0.60	CurrentMax: 0.89	AvgBestAgent(10): 0.25	CurrentBestAgent: 0.00	Time: 0.90
+Episode 11	AvgMax(10): 0.89	CurrentMax: 0.93	AvgBestAgent(10): 0.63	CurrentBestAgent: 0.76	Time: 0.58
+Episode 11	AvgMax(10): 0.89	CurrentMax: 0.93	AvgBestAgent(10): 0.63	CurrentBestAgent: 0.93	Time: 0.51
+Episode 8	AvgMax(10): 0.38	CurrentMax: 0.20	AvgBestAgent(10): 0.30	CurrentBestAgent: 0.00	Time: 1.04
+Episode 8	AvgMax(10): 0.24	CurrentMax: 0.43	AvgBestAgent(10): 0.20	CurrentBestAgent: 0.43	Time: 1.00
+Episode 8	AvgMax(10): 0.21	CurrentMax: 0.69	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.69	Time: 0.98
+Episode 8	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.19	CurrentBestAgent: 0.00	Time: 1.06
+Episode 12	AvgMax(10): 0.88	CurrentMax: 0.88	AvgBestAgent(10): 0.62	CurrentBestAgent: 0.84	Time: 0.63
+Episode 9	AvgMax(10): 0.65	CurrentMax: 0.00	AvgBestAgent(10): 0.64	CurrentBestAgent: 0.00	Time: 1.08
+Episode 12	AvgMax(10): 0.90	CurrentMax: 0.94	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.00	Time: 0.73
+Episode 9	AvgMax(10): 0.59	CurrentMax: 0.51	AvgBestAgent(10): 0.28	CurrentBestAgent: 0.51	Time: 1.00
+Episode 13	AvgMax(10): 0.89	CurrentMax: 0.85	AvgBestAgent(10): 0.59	CurrentBestAgent: 0.44	Time: 0.66
+Episode 9	AvgMax(10): 0.34	CurrentMax: 0.00	AvgBestAgent(10): 0.27	CurrentBestAgent: 0.00	Time: 1.05
+Episode 9	AvgMax(10): 0.21	CurrentMax: 0.00	AvgBestAgent(10): 0.18	CurrentBestAgent: 0.00	Time: 1.04
+Episode 9	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.19	CurrentBestAgent: 0.00	Time: 1.06
+Episode 13	AvgMax(10): 0.90	CurrentMax: 0.94	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.88	Time: 0.53
+Episode 9	AvgMax(10): 0.17	CurrentMax: 0.00	AvgBestAgent(10): 0.17	CurrentBestAgent: 0.00	Time: 1.07
+Episode 14	AvgMax(10): 0.92	CurrentMax: 0.93	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.90	Time: 0.54
+Episode 10	AvgMax(10): 0.60	CurrentMax: 0.17	AvgBestAgent(10): 0.58	CurrentBestAgent: 0.00	Time: 1.09
+Episode 10	AvgMax(10): 0.53	CurrentMax: 0.00	AvgBestAgent(10): 0.25	CurrentBestAgent: 0.00	Time: 1.08
+Episode 14	AvgMax(10): 0.90	CurrentMax: 0.88	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.54	Time: 0.58
+Episode 10	AvgMax(10): 0.30	CurrentMax: 0.00	AvgBestAgent(10): 0.24	CurrentBestAgent: 0.00	Time: 1.10
+Episode 10	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 1.08
+Episode 10	AvgMax(10): 0.18	CurrentMax: 0.12	AvgBestAgent(10): 0.18	CurrentBestAgent: 0.12	Time: 1.07
+Episode 15	AvgMax(10): 0.91	CurrentMax: 0.88	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.88	Time: 0.68
+Episode 10	AvgMax(10): 0.15	CurrentMax: 0.00	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.11
+Episode 15	AvgMax(10): 0.90	CurrentMax: 0.91	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.91	Time: 0.62
+Episode 11	AvgMax(10): 0.54	CurrentMax: 0.00	AvgBestAgent(10): 0.52	CurrentBestAgent: 0.00	Time: 1.14
+Episode 11	AvgMax(10): 0.55	CurrentMax: 0.67	AvgBestAgent(10): 0.27	CurrentBestAgent: 0.67	Time: 1.02
+Episode 16	AvgMax(10): 0.91	CurrentMax: 0.88	AvgBestAgent(10): 0.74	CurrentBestAgent: 0.88	Time: 0.76
+Episode 11	AvgMax(10): 0.27	CurrentMax: 0.23	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.23	Time: 1.09
+Episode 11	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 1.10
+Episode 11	AvgMax(10): 0.14	CurrentMax: 0.00	AvgBestAgent(10): 0.14	CurrentBestAgent: 0.00	Time: 1.09
+Episode 16	AvgMax(10): 0.88	CurrentMax: 0.74	AvgBestAgent(10): 0.50	CurrentBestAgent: 0.11	Time: 0.90
+Episode 11	AvgMax(10): 0.15	CurrentMax: 0.00	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.11
+Episode 12	AvgMax(10): 0.58	CurrentMax: 0.93	AvgBestAgent(10): 0.32	CurrentBestAgent: 0.93	Time: 1.01
+Episode 17	AvgMax(10): 0.90	CurrentMax: 0.85	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.00	Time: 0.76
+Episode 12	AvgMax(10): 0.48	CurrentMax: 0.00	AvgBestAgent(10): 0.46	CurrentBestAgent: 0.00	Time: 1.14
+Episode 17	AvgMax(10): 0.89	CurrentMax: 0.83	AvgBestAgent(10): 0.58	CurrentBestAgent: 0.83	Time: 0.92
+Episode 12	AvgMax(10): 0.21	CurrentMax: 0.00	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.12
+Episode 12	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 1.09
+Episode 12	AvgMax(10): 0.14	CurrentMax: 0.00	AvgBestAgent(10): 0.14	CurrentBestAgent: 0.00	Time: 1.09
+Episode 12	AvgMax(10): 0.17	CurrentMax: 0.55	AvgBestAgent(10): 0.12	CurrentBestAgent: 0.00	Time: 1.06
+Episode 18	AvgMax(10): 0.89	CurrentMax: 0.85	AvgBestAgent(10): 0.70	CurrentBestAgent: 0.85	Time: 0.78
+Episode 18	AvgMax(10): 0.88	CurrentMax: 0.91	AvgBestAgent(10): 0.49	CurrentBestAgent: 0.00	Time: 0.52
+Episode 13	AvgMax(10): 0.57	CurrentMax: 0.73	AvgBestAgent(10): 0.24	CurrentBestAgent: 0.00	Time: 1.02
+Episode 13	AvgMax(10): 0.38	CurrentMax: 0.00	AvgBestAgent(10): 0.36	CurrentBestAgent: 0.00	Time: 1.14
+Episode 19	AvgMax(10): 0.89	CurrentMax: 0.90	AvgBestAgent(10): 0.58	CurrentBestAgent: 0.90	Time: 0.62
+Episode 13	AvgMax(10): 0.19	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 1.10
+Episode 13	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 1.09
+Episode 13	AvgMax(10): 0.21	CurrentMax: 0.00	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.12
+Episode 19	AvgMax(10): 0.85	CurrentMax: 0.54	AvgBestAgent(10): 0.65	CurrentBestAgent: 0.00	Time: 1.06
+Episode 13	AvgMax(10): 0.17	CurrentMax: 0.00	AvgBestAgent(10): 0.12	CurrentBestAgent: 0.00	Time: 1.14
+Episode 14	AvgMax(10): 0.61	CurrentMax: 0.64	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.00	Time: 1.05
+Episode 20	AvgMax(10): 0.89	CurrentMax: 0.91	AvgBestAgent(10): 0.60	CurrentBestAgent: 0.91	Time: 0.70
+Episode 14	AvgMax(10): 0.29	CurrentMax: 0.00	AvgBestAgent(10): 0.28	CurrentBestAgent: 0.00	Time: 1.11
+Episode 20	AvgMax(10): 0.84	CurrentMax: 0.78	AvgBestAgent(10): 0.55	CurrentBestAgent: 0.00	Time: 0.73
+Episode 14	AvgMax(10): 0.15	CurrentMax: 0.00	AvgBestAgent(10): 0.11	CurrentBestAgent: 0.00	Time: 1.04
+Episode 14	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 1.06
+Episode 14	AvgMax(10): 0.17	CurrentMax: 0.00	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.07
+Episode 14	AvgMax(10): 0.17	CurrentMax: 0.00	AvgBestAgent(10): 0.12	CurrentBestAgent: 0.00	Time: 1.05
+Episode 21	AvgMax(10): 0.89	CurrentMax: 0.92	AvgBestAgent(10): 0.52	CurrentBestAgent: 0.11	Time: 0.68
+Episode 15	AvgMax(10): 0.61	CurrentMax: 0.21	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.00	Time: 1.02
+Episode 15	AvgMax(10): 0.20	CurrentMax: 0.00	AvgBestAgent(10): 0.18	CurrentBestAgent: 0.00	Time: 1.07
+Episode 22	AvgMax(10): 0.88	CurrentMax: 0.91	AvgBestAgent(10): 0.61	CurrentBestAgent: 0.89	Time: 0.54
+Episode 21	AvgMax(10): 0.80	CurrentMax: 0.55	AvgBestAgent(10): 0.53	CurrentBestAgent: 0.55	Time: 0.94
+Episode 15	AvgMax(10): 0.07	CurrentMax: 0.00	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.00	Time: 1.04
+Episode 15	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 1.03
+Episode 15	AvgMax(10): 0.18	CurrentMax: 0.13	AvgBestAgent(10): 0.15	CurrentBestAgent: 0.00	Time: 1.03
+Episode 15	AvgMax(10): 0.11	CurrentMax: 0.00	AvgBestAgent(10): 0.06	CurrentBestAgent: 0.00	Time: 1.05
+Episode 16	AvgMax(10): 0.63	CurrentMax: 0.86	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.00	Time: 0.94
+Episode 22	AvgMax(10): 0.80	CurrentMax: 0.91	AvgBestAgent(10): 0.52	CurrentBestAgent: 0.68	Time: 0.71
+Episode 23	AvgMax(10): 0.87	CurrentMax: 0.76	AvgBestAgent(10): 0.60	CurrentBestAgent: 0.76	Time: 0.77
+Episode 16	AvgMax(10): 0.11	CurrentMax: 0.00	AvgBestAgent(10): 0.09	CurrentBestAgent: 0.00	Time: 1.06
+Episode 16	AvgMax(10): 0.07	CurrentMax: 0.00	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.00	Time: 1.03
+Episode 16	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 1.02
+Episode 23	AvgMax(10): 0.81	CurrentMax: 0.93	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.93	Time: 0.58
+Episode 16	AvgMax(10): 0.10	CurrentMax: 0.00	AvgBestAgent(10): 0.07	CurrentBestAgent: 0.00	Time: 1.04
+Episode 24	AvgMax(10): 0.87	CurrentMax: 0.95	AvgBestAgent(10): 0.63	CurrentBestAgent: 0.91	Time: 0.66
+Episode 16	AvgMax(10): 0.06	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 1.05
+Episode 17	AvgMax(10): 0.57	CurrentMax: 0.27	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.00	Time: 1.02
+Episode 17	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 1.05
+Episode 24	AvgMax(10): 0.81	CurrentMax: 0.91	AvgBestAgent(10): 0.57	CurrentBestAgent: 0.89	Time: 0.78
+Episode 25	AvgMax(10): 0.88	CurrentMax: 0.93	AvgBestAgent(10): 0.63	CurrentBestAgent: 0.91	Time: 0.70
+
+>> Rewards over last 1 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]]
+Mean:
+[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+ 0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+ 0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+Std:
+[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.
+ 0.]
+Best augment:
+[[ 3  4  2 -1  1 -2 -4  3  0 -5 -4  0  4  0  2  1 -4 -4 -2 -1  1 -5 -2  0
+  -1 -3 -4  1  3  4  2 -1  1 -5  4 -3  1 -1  3  0  3  2  4 -1  3  4 -4 -3
+   2]
+ [ 1 -3  2 -5 -2  2 -3 -1  3 -2  3  2 -2 -2  2 -4  3  2  3 -1  3  4 -4 -5
+  -5 -3 -5 -4 -5  2 -3  1 -5  1  3 -3 -5  0 -2  2  4 -3  0 -3  4  0 -3 -4
+  -4]
+ [ 4  1 -1 -2 -1  3  3 -5  3  2 -3 -5  4  2  0  4 -1  3  3 -3  1  3  3 -1
+   4  1 -5 -1 -5 -3  0 -5 -2  4  0  4 -5  1  2 -2  3  4  3  3  3 -4  4  2
+   0]
+ [-2  1  2 -2  1  1 -1  3 -4 -5 -3  3  1 -4  4  2 -4 -2  3 -3 -1  1 -4 -2
+   4 -4 -2  2  3 -4  1 -4  1 -3  0 -2 -1 -1 -3 -5  3 -1 -2 -3 -1  0  0  1
+  -3]
+ [ 2 -3 -1 -1  4  4  2 -5  0  2 -5  2  0  2  2  1  1 -5  1 -2 -3 -5 -2  0
+  -2 -4  4  2 -3  2 -3 -4  3  0 -1  3 -5 -1  2  0 -2 -2  3  3 -3  1  1 -5
+  -1]
+ [-2  2 -4 -2 -4 -2 -3 -5 -2 -5 -3 -4  0  1 -5 -1  2 -1  4 -5  4  4  1  4
+  -1 -5 -5  3 -2  4 -2  3 -1 -4 -4  3  3 -1 -4 -1 -4 -5  4  2 -1  1  4 -2
+  -5]
+ [ 2  2 -2 -5 -4 -2 -1 -3  0 -5 -1 -5  1 -3  1  2 -3 -3 -2 -3  4 -2  0 -3
+   2 -5  0 -3  0 -5  1 -2  0 -1  0  3  4 -4  1  3 -1  0 -5  2 -1  0  3 -2
+   4]]
+
+>> Time:
+Total time taken:  17.33472956418991
+Episode 17	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.00	Time: 0.98
+Episode 17	AvgMax(10): 0.08	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 0.98
+Episode 17	AvgMax(10): 0.06	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.98
+Episode 17	AvgMax(10): 0.06	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.95
+Episode 18	AvgMax(10): 0.48	CurrentMax: 0.00	AvgBestAgent(10): 0.21	CurrentBestAgent: 0.00	Time: 0.93
+Episode 25	AvgMax(10): 0.80	CurrentMax: 0.78	AvgBestAgent(10): 0.54	CurrentBestAgent: 0.62	Time: 0.64
+
+>> Rewards over last 2 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]]
+Mean:
+[0.503125 0.9125   0.83125  0.796875 0.9125   0.928125 0.85625  0.925
+ 0.89375  0.9125   0.928125 0.90625  0.89375  0.903125 0.89375  0.809375
+ 0.840625 0.878125 0.71875  0.846875 0.734375 0.9125   0.84375  0.93125
+ 0.85625 ]
+Std:
+[0.021875 0.00625  0.06875  0.096875 0.01875  0.009375 0.0875   0.00625
+ 0.03125  0.01875  0.003125 0.03125  0.04375  0.028125 0.01875  0.071875
+ 0.009375 0.028125 0.18125  0.065625 0.184375 0.       0.08125  0.01875
+ 0.075   ]
+Best augment:
+[[ 4  1  0 -2  4  0 -4  3  0  3  3 -5  1  1  4  1 -3  1 -5 -4  3 -1 -3 -1
+   3  3 -3 -2  2 -4  2  2  2 -1  0  1  1  4  1 -2  1  2 -3  4  1  3 -2 -4
+   1]
+ [-4 -3  1 -1  3 -1  4  3  2  2 -3 -1  4 -1  2  0 -1  2  2 -2  3 -3 -3  3
+   3  4  1  1 -3 -3  1 -5  0 -4 -4  0 -3  1 -4 -5  1  3 -2  1 -4 -2 -4  2
+  -5]
+ [ 4  2  2  0 -2 -4 -4  1  3 -5  3 -4  0 -1  4 -5 -1  1  1  0 -3  1 -5  3
+  -2  3  4 -2  1 -4 -5  4 -4 -1 -1  0 -5  4  4  0 -4  4  1  1  1  4  4  4
+   3]
+ [ 4  2  0  1  1  1 -3  1 -3  4 -3  4  0 -1 -5 -4 -1 -2  4  0 -5 -5 -1 -4
+   0  4 -5  3  0 -4 -1 -3 -2  0  4 -1 -5  2 -4  2  1 -4  1  4 -4  1  2  2
+   4]
+ [-2 -4 -1 -1 -1  3 -2 -3 -1 -4 -5  1 -4 -3 -1  1 -5  3 -4 -4 -2  1  2 -1
+   4  0  1  1 -3 -3  2 -1 -5  1 -2 -1 -5  0 -3 -1 -3 -4 -1 -2 -5 -2  3  3
+   4]
+ [-5 -5  3 -2 -2  4 -1  1  4 -5 -5 -5  3  0 -1 -3 -4  1  3 -1  3 -4 -4  2
+  -3 -4  4  2  2  3 -5 -1 -3  4 -5  1 -1  0  4  2  4 -4  2  3  3 -4 -1 -1
+   0]
+ [-2 -4  0  0 -4  4 -1 -5  4  1 -3 -4  4 -5 -2 -5  0 -3  0 -1  2  4 -5 -4
+   1 -5  2 -4 -4  2  4  2  2  0  1 -3 -3  4 -1 -2  0 -1 -2 -3 -5  2  3 -5
+  -5]]
+
+>> Time:
+Total time taken:  17.87487424214681
+Episode 18	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.83
+Episode 18	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.76
+Episode 18	AvgMax(10): 0.03	CurrentMax: 0.20	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.20	Time: 0.75
+Episode 18	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.77
+Episode 18	AvgMax(10): 0.06	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.74
+Episode 19	AvgMax(10): 0.44	CurrentMax: 0.11	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.72
+Episode 19	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.70
+Episode 19	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.69
+Episode 19	AvgMax(10): 0.03	CurrentMax: 0.00	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.00	Time: 0.69
+Episode 19	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.69
+Episode 19	AvgMax(10): 0.11	CurrentMax: 0.56	AvgBestAgent(10): 0.06	CurrentBestAgent: 0.56	Time: 0.66
+Episode 20	AvgMax(10): 0.44	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.69
+Episode 20	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.70
+Episode 20	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.68
+Episode 20	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.68
+Episode 20	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.69
+Episode 20	AvgMax(10): 0.18	CurrentMax: 0.66	AvgBestAgent(10): 0.12	CurrentBestAgent: 0.66	Time: 0.65
+Episode 21	AvgMax(10): 0.37	CurrentMax: 0.00	AvgBestAgent(10): 0.09	CurrentBestAgent: 0.00	Time: 0.68
+Episode 21	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.70
+Episode 21	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.68
+Episode 21	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.68
+Episode 21	AvgMax(10): 0.01	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.69
+Episode 21	AvgMax(10): 0.22	CurrentMax: 0.42	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.42	Time: 0.67
+Episode 22	AvgMax(10): 0.30	CurrentMax: 0.14	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.68
+Episode 22	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.71
+Episode 22	AvgMax(10): 0.04	CurrentMax: 0.36	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.36	Time: 0.66
+Episode 22	AvgMax(10): 0.02	CurrentMax: 0.00	AvgBestAgent(10): 0.02	CurrentBestAgent: 0.00	Time: 0.69
+Episode 22	AvgMax(10): 0.04	CurrentMax: 0.27	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.27	Time: 0.68
+Episode 22	AvgMax(10): 0.16	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.70
+Episode 23	AvgMax(10): 0.25	CurrentMax: 0.29	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.29	Time: 0.67
+Episode 23	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.71
+Episode 23	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.00	Time: 0.69
+Episode 23	AvgMax(10): 0.05	CurrentMax: 0.26	AvgBestAgent(10): 0.05	CurrentBestAgent: 0.26	Time: 0.68
+Episode 23	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.00	Time: 0.69
+Episode 24	AvgMax(10): 0.24	CurrentMax: 0.56	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.56	Time: 0.63
+Episode 23	AvgMax(10): 0.16	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.69
+Episode 24	AvgMax(10): 0.07	CurrentMax: 0.35	AvgBestAgent(10): 0.04	CurrentBestAgent: 0.00	Time: 0.66
+Episode 24	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.70
+Episode 24	AvgMax(10): 0.05	CurrentMax: 0.00	AvgBestAgent(10): 0.05	CurrentBestAgent: 0.00	Time: 0.68
+Episode 24	AvgMax(10): 0.04	CurrentMax: 0.00	AvgBestAgent(10): 0.03	CurrentBestAgent: 0.00	Time: 0.69
+Episode 25	AvgMax(10): 0.22	CurrentMax: 0.00	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.00	Time: 0.68
+
+>> Rewards over last 3 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]]
+Mean:
+[0.49166667 0.79791667 0.82916667 0.62916667 0.675      0.84791667
+ 0.84791667 0.91458333 0.76458333 0.60833333 0.84166667 0.91458333
+ 0.83958333 0.81666667 0.66458333 0.825      0.65       0.58541667
+ 0.51458333 0.56458333 0.48958333 0.65625    0.65833333 0.80833333
+ 0.57083333]
+Std:
+[0.02411633 0.16212564 0.05621141 0.25001736 0.33622444 0.1136897
+ 0.07240895 0.01559024 0.18444267 0.43042897 0.12229717 0.0281057
+ 0.08452276 0.12440832 0.324452   0.06270799 0.26969311 0.41458857
+ 0.324452   0.40280053 0.37750322 0.36239223 0.27048054 0.17450326
+ 0.40825892]
+Best augment:
+[[ 1 -1 -5  0  2  2  3 -2  3  3 -4  2  0 -5 -5  4  2 -2  0 -5  3  1 -2 -2
+  -4 -1 -5  4 -3 -4 -3  1  0  4  2  1  4 -2  1  1  2 -3 -5 -3 -1  1  2 -1
+  -3]
+ [-2 -2  4  3  2  1  0  2 -2  4 -2  3 -2  4  4  0  2  1 -1  2 -4  0  4 -4
+  -1  4  2 -1  1 -3  4 -5 -3 -2  2  3  2 -3  0  4 -2  1 -4  3 -2  3 -1  0
+   4]
+ [-3  1 -5 -2 -1  2  4 -5 -5 -1 -5  4 -3 -3  0  1 -1  0  0  1  4 -3  4  0
+  -1  2  3 -1 -2  2  0 -3 -3 -4  3  3  2 -1 -1 -5  1  2 -5 -3 -1  3 -2  0
+   4]
+ [-4 -4 -4 -2 -3 -1 -1 -5 -3 -4 -3  2 -2 -3  2  2  0  0  4  1  3  4 -1  2
+  -3 -3  4 -3  0  1  2 -3  1 -2  3  2  4 -5 -1  3  3  4 -1 -5  1 -5 -4  0
+   1]
+ [-5 -5  3 -5  0  3  3 -3 -1  1 -2 -3  3 -5 -5 -5 -2  0  1 -2 -4 -4  4  4
+   3  0  4 -4 -4  4  0  0 -1 -1  4 -2  1 -2 -1  1 -4  1  3  0  0  3 -3  1
+   4]
+ [ 4 -2 -2  4 -5  2 -1 -3 -2  3 -5 -1 -1  3 -4 -3  2 -2  4 -3  4  4 -2 -5
+  -3 -4  2  0  2 -4 -1 -1  1 -5  4 -3 -3  4 -5 -3 -5 -1 -5 -1  4 -4  3  0
+   2]
+ [-4 -3 -1 -1 -4 -5  0  0 -2  2  2  1  2 -5  0  0  2 -3 -2  4  3 -4  1 -1
+  -4  2  3  2 -2  3  4 -2  1  3 -3 -1 -5  1 -3 -2  1 -1 -3  4 -5 -2 -1 -5
+   4]]
+
+>> Time:
+Total time taken:  22.345149421691893
+Episode 24	AvgMax(10): 0.16	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.70
+Episode 25	AvgMax(10): 0.13	CurrentMax: 0.55	AvgBestAgent(10): 0.09	CurrentBestAgent: 0.55	Time: 0.58
+
+>> Rewards over last 4 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]
+ [0.      0.      0.      0.44375 0.70625 0.      0.31875 0.43125 0.
+  0.      0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.35625 0.      0.35    0.55   ]]
+Mean:
+[0.36875   0.5984375 0.621875  0.5828125 0.6828125 0.6359375 0.715625
+ 0.79375   0.5734375 0.45625   0.63125   0.6859375 0.6296875 0.6125
+ 0.4984375 0.61875   0.4875    0.4390625 0.3859375 0.4234375 0.3671875
+ 0.58125   0.49375   0.69375   0.565625 ]
+Std:
+[0.21391989 0.37294685 0.36232485 0.23092777 0.29149316 0.38013091
+ 0.23756167 0.20972452 0.36759286 0.4564426  0.37952993 0.39677349
+ 0.37084613 0.36967574 0.40220037 0.36133974 0.36574517 0.43951267
+ 0.35860992 0.42597258 0.38964565 0.33966321 0.3689618  0.24945253
+ 0.35367766]
+Best augment:
+[[-5  0 -1  3  0 -5  0 -5 -3  4  4 -4  0  1  4  3 -1 -3  2 -2 -5 -1  1  4
+  -4 -4 -3 -1  0 -2 -1  0  2  0 -1 -1  1 -1 -5  0 -4 -5 -2 -5 -3  2 -4  3
+   0]
+ [ 4 -5  1 -1  4  0 -5 -3  3 -1 -1  1 -5  2 -4 -1 -2 -2 -4 -5  4 -3  0 -3
+  -5  2  3 -3 -3 -5  0 -2  3  1  2 -2  2  0 -3 -3 -3  3 -5 -5 -2  4  4  4
+   1]
+ [ 2 -2  4 -3 -4 -2  0  2  2 -2  2  4 -4  2 -4 -3 -4 -2  2  0 -1 -1  2  2
+   3 -4 -1  4  2 -4 -1  2 -4 -5  4  4 -2 -2 -4  1  4 -5 -3 -3  0  4 -3 -5
+  -4]
+ [ 3  2 -3  0 -2  2 -5 -4 -4 -4  1  0  4 -4 -3  2  3  3  0 -4  4 -4  2 -4
+   0 -5 -2  2  0  1  3  1 -1  4 -2 -4 -1 -4  0 -4  0 -4 -1  1 -3  3 -3  2
+   0]
+ [ 1 -4 -2 -3  0  1 -1 -2  0 -5  3  2 -1 -1  4 -1 -2  4  3  0  0 -1 -5  2
+   4  2  2  4  0  2 -2  1  4  4 -5  2  1  2 -4 -3  4  3  4  3 -5 -2  4  4
+   1]
+ [-5  4  2  3 -5  4  3 -5  0 -2 -3 -1 -2  4  3 -5 -2  2  0  0 -3 -4  1 -4
+   0 -1  4  0  0 -5  0  3  0  1  2  4 -3  3 -1 -2  2 -1  2 -1 -4  4  4  4
+  -3]
+ [ 2  1 -4 -5  4  2  4  2  4  1 -1  2 -1 -2 -1 -2 -1  4 -1 -1 -3 -3  4  0
+  -3 -5 -3  4 -3  4  4  3 -2  0  0 -5 -2  0  2  2  1  0 -3 -3 -2 -5 -3 -1
+   2]]
+
+>> Time:
+Total time taken:  22.811643143494923
+Episode 25	AvgMax(10): 0.08	CurrentMax: 0.32	AvgBestAgent(10): 0.08	CurrentBestAgent: 0.32	Time: 0.58
+
+>> Rewards over last 5 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]
+ [0.      0.      0.      0.44375 0.70625 0.      0.31875 0.43125 0.
+  0.      0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.35625 0.      0.35    0.55   ]
+ [0.38125 0.      0.61875 0.      0.      0.      0.      0.69375 0.
+  0.125   0.      0.      0.      0.      0.      0.      0.      0.2
+  0.      0.      0.      0.      0.25625 0.      0.31875]]
+Mean:
+[0.37125 0.47875 0.62125 0.46625 0.54625 0.50875 0.5725  0.77375 0.45875
+ 0.39    0.505   0.54875 0.50375 0.49    0.39875 0.495   0.39    0.39125
+ 0.30875 0.33875 0.29375 0.465   0.44625 0.555   0.51625]
+Std:
+[0.19140108 0.41057505 0.32407561 0.31146328 0.37758691 0.42462483
+ 0.35649334 0.19180068 0.40088964 0.42921804 0.42307284 0.4485811
+ 0.4164883  0.41152536 0.41129369 0.40707416 0.38084199 0.40457539
+ 0.35596699 0.41695323 0.37819472 0.38256127 0.3434112  0.35607232
+ 0.33139384]
+Best augment:
+[[ 3  1  0 -5 -3  0 -4  2 -5  3 -1 -2  1  2 -5  0  0 -2 -4 -3 -1 -5  0  1
+   4 -3 -4  4  4 -5  4  2 -2 -2 -1  2 -5 -3 -5  2 -5  3 -4  3 -5  4 -3  4
+   3]
+ [-4  4 -2  4 -3 -4  0 -4  1 -5 -4  4  1 -2 -5 -4 -3 -1 -3  2 -5 -5  0  1
+   2 -1 -4 -2  4 -5  0 -2 -1 -1 -5  0  2 -3  2 -3 -1 -5 -4 -5  2  0 -2 -3
+   1]
+ [-4 -2 -5 -2 -5 -5 -1 -3  0 -3 -2  4 -3 -1 -2  1 -3  3 -5  1  0 -2 -5  4
+   1 -3 -3  4  2  3  1 -4  1 -3  1 -5 -1 -5 -5 -4  3  1 -3 -5  4 -5 -2 -2
+  -2]
+ [-3  2 -1  1  1 -4 -3  3 -1 -4  1 -4 -2  1 -2 -4 -4  3 -2 -4 -1 -4  4  4
+   3  0  0  0 -4  3  2  3  3  0 -3  3  2  4 -2 -2  2 -2 -4  0 -4  1  0  0
+   2]
+ [-2  2  3 -1  0 -5 -3 -4  3  3 -3 -2  0  4  1 -1  0 -1 -2 -2  4 -1 -4  3
+  -5 -3 -3  1 -5  4 -2 -5 -4  3 -2 -2 -3 -1 -3 -5  3 -4 -4  0 -3  4 -3 -2
+   3]
+ [-3  4  1  1  3  0 -1 -4 -3  2  3  0  3 -4 -3 -5  0  1  3  2 -2  2 -5 -3
+   1  1 -3 -3 -3 -1  0  0  1 -5 -2 -1  1  1  4  2  0 -5  2 -3  4 -2 -2 -2
+  -2]
+ [-3 -3 -3 -2 -3  3 -1  4  0  2  0 -3 -5 -3 -4 -3 -1  1  2 -3  0  3 -3  0
+   1 -4  4 -2 -3 -4  1  4  4 -5  1  0  4 -2 -2  0 -3  4  2  4  2  2 -1 -1
+   0]]
+
+>> Time:
+Total time taken:  22.896472517649332
+Episode 25	AvgMax(10): 0.00	CurrentMax: 0.00	AvgBestAgent(10): 0.00	CurrentBestAgent: 0.00	Time: 0.61
+
+>> Rewards over last 6 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]
+ [0.      0.      0.      0.44375 0.70625 0.      0.31875 0.43125 0.
+  0.      0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.35625 0.      0.35    0.55   ]
+ [0.38125 0.      0.61875 0.      0.      0.      0.      0.69375 0.
+  0.125   0.      0.      0.      0.      0.      0.      0.      0.2
+  0.      0.      0.      0.      0.25625 0.      0.31875]
+ [0.61875 0.6     0.93125 0.88125 0.9375  0.95    0.8875  0.      0.
+  0.16875 0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.      0.      0.      0.     ]]
+Mean:
+[0.4125     0.49895833 0.67291667 0.53541667 0.61145833 0.58229167
+ 0.625      0.64479167 0.38229167 0.353125   0.42083333 0.45729167
+ 0.41979167 0.40833333 0.33229167 0.4125     0.325      0.32604167
+ 0.25729167 0.28229167 0.24479167 0.3875     0.371875   0.4625
+ 0.43020833]
+Std:
+[0.19757646 0.37751615 0.31759732 0.32366848 0.37425998 0.42106661
+ 0.34595881 0.33735368 0.40392631 0.40040263 0.42962657 0.45772332
+ 0.42402487 0.41770184 0.40379735 0.41487636 0.37681851 0.39706634
+ 0.34472243 0.40101461 0.36218407 0.38986175 0.35487215 0.38527588
+ 0.35851649]
+Best augment:
+[[ 3  4  3  0 -3  2 -2 -3  3 -4  1 -1 -2  1 -5  0 -1 -3 -1  2  4 -5  4 -1
+  -3  2 -4  3  3 -1  0  2  4 -5  3 -5  0  1 -5 -3  1  0 -4 -4  4 -1  3 -2
+   4]
+ [ 2  3 -1  4  2 -4  2 -5  3  1 -2  1  3  1  4  1  0  1  0 -1 -4  0  4  4
+   0 -2  0  2  0 -3  3  3 -4 -1  3  0  2  4  0  3 -1 -1 -4 -3  2  2 -5  0
+   4]
+ [-5  1  0  3  0  4 -4  1 -3  0 -5 -3  4 -3 -3 -2 -3  2 -2  4  4  4  2 -2
+   4  0  2  1 -1  1 -3  2 -2 -3  3  4  2  0  2  1 -1 -3 -2 -1 -5  0 -3  2
+   3]
+ [ 4 -5 -5  0  1  1 -1  2 -1  0  3 -1 -4  1 -3 -4  2  2  3  0 -4  2 -2 -4
+  -5 -5  4  4 -5  3 -5  4 -4  3 -5  0  0  4 -2 -1 -5  2 -4 -5  0  4  3 -2
+  -5]
+ [ 0  4  3  4 -3 -1  2  1  3 -1  4  4 -5  4 -3  2  4 -5 -5 -3  2 -3 -2 -4
+  -4  0 -4  4  3 -1  4  0  0  0  0 -5  0 -5 -4 -3  4 -5 -1  3 -2 -4  1  0
+   1]
+ [-2  1 -5 -1 -3 -4 -2 -5  2  0 -1 -3  2 -1 -4  4 -1 -2  3  0 -2 -3 -5  4
+  -1 -2  3  2  3  1 -3  3  4  2 -5  2 -1 -1  0 -4 -1 -4  4 -2  2 -3  3  0
+  -4]
+ [-4 -5  1  2  4  4  4 -1  2 -3 -5 -2  3  4  2 -1  4 -4  3 -3  2 -5 -4 -4
+   1 -4  3  1  0  1 -4 -2  4  0 -1  1  2  4  0 -1  4 -3 -1  3  3  4  4  0
+   2]]
+
+>> Time:
+Total time taken:  22.79267874956131
+Episode 25	AvgMax(10): 0.11	CurrentMax: 0.82	AvgBestAgent(10): 0.11	CurrentBestAgent: 0.82	Time: 0.51
+
+>> Rewards over last 7 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]
+ [0.      0.      0.      0.44375 0.70625 0.      0.31875 0.43125 0.
+  0.      0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.35625 0.      0.35    0.55   ]
+ [0.38125 0.      0.61875 0.      0.      0.      0.      0.69375 0.
+  0.125   0.      0.      0.      0.      0.      0.      0.      0.2
+  0.      0.      0.      0.      0.25625 0.      0.31875]
+ [0.61875 0.6     0.93125 0.88125 0.9375  0.95    0.8875  0.      0.
+  0.16875 0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.      0.      0.      0.     ]
+ [0.55625 0.61875 0.      0.40625 0.      0.8125  0.44375 0.2     0.
+  0.      0.23125 0.      0.      0.      0.13125 0.      0.      0.
+  0.      0.      0.      0.26875 0.      0.      0.825  ]]
+Mean:
+[0.43303571 0.51607143 0.57678571 0.51696429 0.52410714 0.61517857
+ 0.59910714 0.58125    0.32767857 0.30267857 0.39375    0.39196429
+ 0.35982143 0.35       0.30357143 0.35357143 0.27857143 0.27946429
+ 0.22053571 0.24196429 0.20982143 0.37053571 0.31875    0.39642857
+ 0.48660714]
+Std:
+[0.18971061 0.35201678 0.37670319 0.30304839 0.40723683 0.39806812
+ 0.32651482 0.34896211 0.39716991 0.3907533  0.4032513  0.45297521
+ 0.41915435 0.41226996 0.38040535 0.41032785 0.36693496 0.38490946
+ 0.33160719 0.38418389 0.34608553 0.36332594 0.35337973 0.39169471
+ 0.35952332]
+Best augment:
+[[-1 -5  4  4 -3 -2 -5  3 -1  3  4 -3  1  2 -3  1 -5  1  0 -1  4 -4 -3 -3
+  -3  2  4  1 -4  2  1 -4  2  0 -1  1 -1  4  2  2 -4  2  1 -3 -1  2  0  1
+   2]
+ [-2  0  3 -3  0 -4 -2  4 -2  1  3 -1  4  2 -4  4 -3  1 -2  2 -4  3  4 -2
+   0 -1  1  4 -5  0 -4 -4 -3  1  1  1  3  4 -4 -2  3 -5 -5 -4  3  0  4 -5
+  -1]
+ [-3 -5 -2  1 -5 -2 -1  2 -1 -4  1  3 -4 -3  1  0 -4 -1  0 -1 -1  3 -3  2
+  -1 -3 -3  3 -3  4 -2 -5 -1 -4 -3 -3 -3 -5 -2  3  3  2 -4  2 -1 -3  3  3
+  -2]
+ [ 0  3 -1  4  2  4 -2  1 -5  4  2 -4  3  0 -2  4 -5 -3  3 -5 -3  0 -5  0
+  -3  3 -3  1 -4 -2  4  4  1 -2 -3  4  0 -2  1 -5 -3  0 -4 -1 -3 -3  4  2
+   2]
+ [ 2 -4  0 -3 -3  2 -1  3 -1 -4  0 -3 -3  4 -4 -3 -1  0  3 -2 -4 -3 -5 -1
+   1  1  3  4 -4 -5 -1 -3 -1  0 -2 -2  3  2 -2 -2  4  2 -2 -3 -4 -1 -1  3
+   4]
+ [ 0  3  2 -1  2  1  2  1  4 -1 -3  2 -3  4 -2  0 -2 -5  1 -5 -3  0 -3  1
+  -2 -5  3  0 -3 -4 -2 -1  1 -5 -1 -2  4  0 -4  0  4  1 -5 -4  4  0 -3 -3
+   2]
+ [ 3  1 -1  3  4  0  4  4 -3 -3  2 -5 -1  3  3 -1 -1 -2  3  1  3  1  4 -1
+  -5  2 -4 -1 -1 -5  0  3  4 -4  0  3  2 -5  1  0 -3 -2  4  3  2 -4  0 -1
+   2]]
+
+>> Time:
+Total time taken:  22.848137390613555
+Episode 25	AvgMax(10): 0.16	CurrentMax: 0.00	AvgBestAgent(10): 0.16	CurrentBestAgent: 0.00	Time: 0.54
+
+>> Rewards over last 8 trial(s)
+Last:
+[[0.525   0.90625 0.9     0.89375 0.89375 0.9375  0.76875 0.93125 0.8625
+  0.89375 0.93125 0.9375  0.9375  0.875   0.9125  0.7375  0.83125 0.90625
+  0.9     0.9125  0.91875 0.9125  0.7625  0.95    0.93125]
+ [0.48125 0.91875 0.7625  0.7     0.93125 0.91875 0.94375 0.91875 0.925
+  0.93125 0.925   0.875   0.85    0.93125 0.875   0.88125 0.85    0.85
+  0.5375  0.78125 0.55    0.9125  0.925   0.9125  0.78125]
+ [0.46875 0.56875 0.825   0.29375 0.2     0.6875  0.83125 0.89375 0.50625
+  0.      0.66875 0.93125 0.73125 0.64375 0.20625 0.85625 0.26875 0.
+  0.10625 0.      0.      0.14375 0.2875  0.5625  0.     ]
+ [0.      0.      0.      0.44375 0.70625 0.      0.31875 0.43125 0.
+  0.      0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.35625 0.      0.35    0.55   ]
+ [0.38125 0.      0.61875 0.      0.      0.      0.      0.69375 0.
+  0.125   0.      0.      0.      0.      0.      0.      0.      0.2
+  0.      0.      0.      0.      0.25625 0.      0.31875]
+ [0.61875 0.6     0.93125 0.88125 0.9375  0.95    0.8875  0.      0.
+  0.16875 0.      0.      0.      0.      0.      0.      0.      0.
+  0.      0.      0.      0.      0.      0.      0.     ]
+ [0.55625 0.61875 0.      0.40625 0.      0.8125  0.44375 0.2     0.
+  0.      0.23125 0.      0.      0.      0.13125 0.      0.      0.
+  0.      0.      0.      0.26875 0.      0.      0.825  ]
+ [0.      0.33125 0.      0.      0.63125 0.55    0.      0.      0.
+  0.      0.      0.55    0.      0.      0.      0.      0.      0.
+  0.55625 0.6625  0.41875 0.      0.      0.      0.     ]]
+Mean:
+[0.37890625 0.49296875 0.5046875  0.45234375 0.5375     0.60703125
+ 0.52421875 0.50859375 0.28671875 0.26484375 0.34453125 0.41171875
+ 0.31484375 0.30625    0.265625   0.309375   0.24375    0.24453125
+ 0.2625     0.29453125 0.2359375  0.32421875 0.27890625 0.346875
+ 0.42578125]
+Std:
+[0.22803803 0.33490667 0.40069215 0.33104265 0.38257965 0.37298204
+ 0.36406501 0.37882087 0.38700116 0.37897551 0.39905207 0.42693079
+ 0.40974384 0.40264021 0.36972857 0.40124319 0.35538546 0.37172315
+ 0.32946156 0.38534478 0.33102513 0.36127808 0.34695857 0.3891472
+ 0.37282491]
+Best augment:
+[[ 1 -5 -3 -2 -5 -1 -5 -5 -3 -1  1 -3  4  3 -4  1 -3  0  3  1 -3 -2  4  2
+  -4  3  0  1  0  3 -3 -4 -3  4  0 -3 -3  1  2 -3 -5 -3  4 -1  0  4  0  1
+   4]
+ [ 3 -2 -1  2  2  4  2 -5  1  4 -5  0 -3  3  3 -5  1 -1 -5 -5 -4 -3 -5 -4
+  -5  1 -5 -3 -5  4 -5 -5  0  3 -3 -5  2  1  1  4  4  1  3 -5 -4  4 -4 -5
+  -4]
+ [-1  0  2 -4 -5  0  0  2  2 -2 -3 -4  2  1 -2  3  3  3 -3  2 -2 -1 -4 -2
+  -3  1 -5  0  4 -2  0 -3 -2  1 -4 -3  2  3 -2  0  4  4 -2 -3 -3  2 -4  4
+   2]
+ [-1 -1 -5 -1  3  0  2 -5  0 -3  1 -2  2 -4  1 -5 -5  3 -5  2 -2  3 -2  4
+   0  0  3 -5  3  0 -3 -5  1 -1 -3  4  1 -2 -4  1 -5 -5 -3  0  2  4  3  0
+  -1]
+ [-4 -5  2  4 -5 -1  4 -2 -1 -3 -4 -1  3  1 -3 -4 -1 -3  0 -2 -5  3 -3 -1
+   1  2  4 -1  0 -2 -4  4  1 -1 -5 -5  3  3 -5 -5 -5  0  4 -3  2  3  3 -5
+   2]
+ [ 0  1 -3 -5  4  1 -1 -4 -2  3 -3  4 -3  3 -1 -3 -2  0  2 -5 -5  1  3  1
+   4  1 -2  0 -4  0 -4  1 -3 -4 -4  4  4  4 -5 -4  4  4 -2 -4 -3  0 -5  1
+   0]
+ [-3 -2  1  0  0 -3 -5  2 -2 -5 -5 -1 -4  0 -3  1 -5 -3  3  1  1  4  0 -1
+   2  4  2  1  2  1 -5 -4 -2 -2 -2 -1 -4 -4 -5 -4 -1  4 -5 -5 -4  3  4  3
+  -4]]
+
+>> Time:
+Total time taken:  22.974180448055268
