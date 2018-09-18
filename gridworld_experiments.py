@@ -26,22 +26,27 @@ class EnvironmentWrapper:
 def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
                    dqn_type=DQN_TYPE,
                    num_population=20):
-    episode_reward_trials = np.empty((0, NUM_EPISODES))
+
+    # Log and stat file names
+    trial_save_filename = "plotted_values/" + base_filename + 'maxrewards.npy'
+    bestagent_save_filename = "plotted_values/" + base_filename + 'agentrewards.npy'
     base_filename = ('grid_evoreward_pop' + str(num_population)
                      if dqn_type == EVODQN_TYPE else 'grid_dqn')
     base_filename = base_filename + env_id + str(dqn_type)
-
     log_filename = "logs/" + base_filename
 
+    # initial vars
+    env_wrapper = EnvironmentWrapper()
+    episode_reward_trials = np.empty((0, NUM_EPISODES))
     augment = ''
     trials_completed = 1
 
+    # Start train
     time_start = time.time()
-
     if dqn_type == EVODQN_TYPE:
         print("DQN with augmented reward----", env_id)
         dqnobject = EvoDQNTrain(
-            env=env_id,
+            env_wrapper=env_wrapper,
             score_averaged_over=AVERAGED_OVER,
             log_file=log_filename)
         [episode_rewards, best_agent_rewards, augment] = dqnobject.train(
@@ -49,15 +54,12 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
     else:
         print("DQN with normal reward----", env_id)
         dqnobject = DQNTrain(
-            env=env_id,
+            env_wrapper=env_wrapper,
             score_averaged_over=AVERAGED_OVER,
             log_file=log_filename)
         [episode_rewards] = dqnobject.train(n_episodes=NUM_EPISODES)
 
     # Save rewards to file as backup
-    trial_save_filename = "plotted_values/" + base_filename + 'maxrewards.npy'
-    bestagent_save_filename = "plotted_values/" + base_filename + 'agentrewards.npy'
-
     if os.path.isfile(trial_save_filename):
         old_trials = np.load(trial_save_filename)
         trials_completed = old_trials.shape[0] + 1
@@ -69,6 +71,7 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
     episode_reward_trials = np.append(
         episode_reward_trials, [episode_rewards], axis=0)
 
+    # Save stats as files
     np.save(trial_save_filename, episode_reward_trials)
     if dqn_type == EVODQN_TYPE:
         np.save(bestagent_save_filename, best_agent_rewards)
@@ -119,22 +122,22 @@ env = args.env
 n_population = args.n_pop
 
 # Trials DQN with evoReward
-#run_dqn_trials(env_id = env,dqn_type=EVODQN_TYPE, num_population=n_population)
+run_dqn_trials(env_id = env,dqn_type=EVODQN_TYPE, num_population=n_population)
 
 # plot figure
-#mean_rewards = np.average(episode_reward_trials,axis=0)
-#std_rewards = np.std(episode_reward_trials,axis=0)
-#plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
+mean_rewards = np.average(episode_reward_trials,axis=0)
+std_rewards = np.std(episode_reward_trials,axis=0)
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
 ### Trials DQN
 episode_reward_trials = run_dqn_trials(env_id=env)
 
 # plot figure
-#mean_rewards = np.average(episode_reward_trials,axis=0)
-#std_rewards = np.std(episode_reward_trials,axis=0)
-#plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
+mean_rewards = np.average(episode_reward_trials,axis=0)
+std_rewards = np.std(episode_reward_trials,axis=0)
+plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
 
-#plt.xlabel("Episode")
-#plt.ylabel("Average Cumulative Reward")
-#plt.legend(title="DQN type")
-#plt.savefig(base_filename+"result.png")
+plt.xlabel("Episode")
+plt.ylabel("Average Cumulative Reward")
+plt.legend(title="DQN type")
+plt.savefig(base_filename+"result.png")
