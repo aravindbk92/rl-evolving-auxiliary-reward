@@ -1,4 +1,4 @@
-from gridworld import DQNTrain, EvoDQNTrain
+from evoDQN import DQNTrain, EvoDQNTrain
 import numpy as np
 import time
 import argparse
