@@ -1,10 +1,10 @@
-import gym
-import gym_minigrid
 import evoReward
 import numpy as np
 from collections import deque
 import datetime
 import time
+import gym
+import gym_minigrid
 
 from keras.models import Sequential
 from keras.layers import Dense
@@ -69,18 +69,39 @@ memory_size = 10000  # memory capacity
 batch_size = 32  # experience mini-batch size
 pretrain_length = batch_size  # number experiences to pretrain the memory
 
-
-class DQNTrain:
+class DQNBase:
     def __init__(self,
-                 env="MiniGrid-Empty-16x16-v0",
+                 env_wrapper=None,
                  score_averaged_over=50,
                  log_file='logs/log'):
-        self.env = gym.make(env)
+        if env_wrapper is None:
+            self.env = gym.make("MiniGrid-Empty-6x6-v0")
+            self.obs_space_size = self.env.observation_space.spaces['image'].shape[0]**2
+            self.action_space_size = self.env.action_space.n
+            self.preprocess = lambda state: state['image'][:, :, 0].reshape(1, self.obs_space_size)
+        else:
+            self.env = env_wrapper.env
+            self.obs_space_size = env_wrapper.obs_space_size
+            self.action_space_size = env_wrapper.action_space_size
+            self.preprocess = env_wrapper.preprocess
+
         self.log_file = log_file
-        self.obs_space_size = self.env.observation_space.spaces['image'].shape[
-            0]**2
-        self.action_space_size = self.env.action_space.n
         self.score_averaged_over = score_averaged_over
+
+class DQNTrain(DQNBase):
+    def __init__(self,
+                 env_wrapper=None,
+                 score_averaged_over=50,
+                 log_file='logs/log'):
+        
+        super(DQNTrain, self).__init__(env_wrapper,score_averaged_over,log_file)
+
+        # init DQN agent
+        self.dqn_agent = QNetwork(
+            hidden_size=hidden_size,
+            learning_rate=learning_rate,
+            state_size=self.obs_space_size,
+            action_size=self.action_space_size)
 
     ## Populate the experience memory
     def populate_memory(self):
@@ -118,18 +139,25 @@ class DQNTrain:
 
         return state
 
-    def preprocess(self, state):
-        return state['image'][:, :, 0].reshape(1, self.obs_space_size)
+    def model_train(self):
+        # Replay
+        inputs = np.zeros((batch_size, self.obs_space_size))
+        targets = np.zeros((batch_size, self.action_space_size))
+        minibatch = self.memory.sample(batch_size)
+        for i, (state_b, action_b, reward_b,
+                next_state_b) in enumerate(minibatch):
+            inputs[i:i + 1] = state_b
+            target = reward_b
+            if not (next_state_b == np.zeros(
+                    state_b.shape)).all(axis=1):
+                target = reward_b + gamma * np.amax(
+                    self.dqn_agent.model.predict(next_state_b)[0])
+            targets[i] = self.dqn_agent.model.predict(state_b)
+            targets[i][action_b] = target
+        self.dqn_agent.model.fit(inputs, targets, epochs=1, verbose=0)
 
     def train(self, n_episodes=1000, render=False, epsilon=EPSILON):
         state = self.populate_memory()
-
-        # init DQN agent
-        dqn_agent = QNetwork(
-            hidden_size=hidden_size,
-            learning_rate=learning_rate,
-            state_size=self.obs_space_size,
-            action_size=self.action_space_size)
 
         #max steps
         n_steps = self.env.max_steps
@@ -137,7 +165,9 @@ class DQNTrain:
         scores_deque = deque(maxlen=self.score_averaged_over)
         scores_deque_logging = deque(maxlen=LOGGING_MEAN_SIZE)
         scores = []
+
         for ep in range(1, n_episodes + 1):
+            time_start = time.time()
             episode_reward = 0.0
             # Explore or Exploit
             explore_p = epsilon
@@ -149,7 +179,7 @@ class DQNTrain:
                     action = self.env.action_space.sample()
                 else:
                     # Get action from Q-network
-                    Qs = dqn_agent.model.predict(state)[0]
+                    Qs = self.dqn_agent.model.predict(state)[0]
                     action = np.argmax(Qs)
 
                 # step environment
@@ -176,34 +206,23 @@ class DQNTrain:
                     self.memory.add((state, action, reward, next_state))
                     state = next_state
 
-                # Replay
-                inputs = np.zeros((batch_size, self.obs_space_size))
-                targets = np.zeros((batch_size, self.action_space_size))
-
-                minibatch = self.memory.sample(batch_size)
-                for i, (state_b, action_b, reward_b,
-                        next_state_b) in enumerate(minibatch):
-                    inputs[i:i + 1] = state_b
-                    target = reward_b
-                    if not (next_state_b == np.zeros(
-                            state_b.shape)).all(axis=1):
-                        target = reward_b + gamma * np.amax(
-                            dqn_agent.model.predict(next_state_b)[0])
-                    targets[i] = dqn_agent.model.predict(state_b)
-                    targets[i][action_b] = target
-                dqn_agent.model.fit(inputs, targets, epochs=1, verbose=0)
+                self.model_train()
 
             scores_deque.append(episode_reward)
             scores_deque_logging.append(episode_reward)
             scores.append(episode_reward)
 
+            # find time taken for each trial
+            time_end = time.time()
+            time_taken = (time_end - time_start) / 60
+
             if (ep % PRINT_INTERVAL == 0):
                 print(
-                    'Episode {}\tAverage Score({:d}): {:.3f}\tCurrent Score: {:.3f}'.
+                    'Episode {}\tAverage Score({:d}): {:.3f}\tCurrent Score: {:.3f}\tTime: {:.2f}'.
                     format(ep, self.score_averaged_over, np.mean(scores_deque),
-                           scores_deque[-1]))
+                           scores_deque[-1],time_taken))
 
-        dqn_agent.model.save("models/grid_dqn-reward-{}.model".format(
+        self.dqn_agent.model.save("models/dqn-reward-{}.model".format(
             datetime.datetime.now().strftime("%d-%m-%y %H:%M")))
 
         # render successful model
@@ -212,19 +231,17 @@ class DQNTrain:
             is_done = False
             while (not is_done):
                 self.env.render()
-                action = dqn_agent.model.predict(state)[0]
+                action = self.dqn_agent.model.predict(state)[0]
                 next_state, reward, is_done, _ = self.env.step(action)
                 state = self.preprocess(next_state)
 
         return [np.array(scores)]
 
 
-class evoAgent:
-    def __init__(self, env, averaged_over):
-        self.env = gym.make(env)
-        self.obs_space_size = self.env.observation_space.spaces['image'].shape[
-            0]**2
-        self.action_space_size = self.env.action_space.n
+class evoAgent(DQNBase):
+    def __init__(self, env_wrapper, averaged_over):
+        super(evoAgent, self).__init__(env_wrapper,averaged_over)
+
         self.qnetwork = QNetwork(
             hidden_size=hidden_size,
             learning_rate=learning_rate,
@@ -235,9 +252,6 @@ class evoAgent:
         self.last_mean_reward = 0.0
         self.scores_deque = deque(maxlen=averaged_over)
         self.explore_p = explore_start
-
-    def preprocess(self, state):
-        return state['image'][:, :, 0].reshape(1, self.obs_space_size)
 
     def populate_memory(self):
         # Initialize the simulation
@@ -290,29 +304,20 @@ class evoAgent:
         self.qnetwork.model.fit(inputs, targets, epochs=1, verbose=0)
 
 
-class EvoDQNTrain:
+class EvoDQNTrain(DQNBase):
     def __init__(self,
-                 env="MiniGrid-Empty-16x16-v0",
+                 env_wrapper,
                  score_averaged_over=50,
                  log_file='logs/log',
                  cross_rate=CROSS_RATE,
                  mutation_rate=MUTATION_RATE,
                  reward_bound=REWARD_BOUND):
-        self.score_averaged_over = score_averaged_over
-        self.log_file = log_file
-        self.env_name = env
 
-        env_temp = gym.make(env)
-        self.obs_space_size = env_temp.observation_space.spaces['image'].shape[
-            0]**2
-        self.action_space_size = env_temp.action_space.n
-
+        super(EvoDQNTrain, self).__init__(env_wrapper,score_averaged_over,log_file)
+        self.env_wrapper = env_wrapper
         self.cross_rate = cross_rate
         self.mutation_rate = mutation_rate
         self.reward_bound = reward_bound
-
-    def preprocess(self, state):
-        return state['image'][:, :, 0].reshape(1, self.obs_space_size)
 
     def train(self,
               n_episodes=1000,
@@ -322,28 +327,26 @@ class EvoDQNTrain:
         with open(self.log_file, 'a+') as f:
             print(file=f)
             print("--evoDQN stats--", file=f)
-            print("ENVIRONMENT:", self.env_name, file=f)
+            print("ENVIRONMENT:", self.env_wrapper.env_name, file=f)
             print("AVERAGED_OVER:", self.score_averaged_over, file=f)
             print("NUM_EPISODES:", n_episodes, file=f)
             print()
 
-        self.n_population = n_population
-
         # Init augmented reward object
-        self.evoRewardObject = evoReward.evoReward(
+        evo_reward_object = evoReward.evoReward(
             DNA_bound=self.reward_bound,
             cross_rate=self.cross_rate,
             mutation_rate=self.mutation_rate,
-            pop_size=self.n_population,
+            pop_size=n_population,
             obs_space_size=self.obs_space_size,
             action_size=self.action_space_size,
             dna_type=1)
 
         # Init population of agents
         dqn_agents = []
-        for n in range(self.n_population):
+        for n in range(n_population):
             dqn_agents.append(
-                evoAgent(self.env_name, self.score_averaged_over))
+                evoAgent(self.env_wrapper, self.score_averaged_over))
 
         #max steps
         n_steps = dqn_agents[0].env.max_steps
@@ -354,7 +357,7 @@ class EvoDQNTrain:
         scores_deque = deque(maxlen=self.score_averaged_over)
         augmented_reward_max = None
         model_max = None
-        agent_mean = np.zeros(self.n_population)
+        agent_mean = np.zeros(n_population)
         for ep in range(1, n_episodes + 1):
             episode_reward_population = np.array([])
             time_start = time.time()
@@ -381,7 +384,7 @@ class EvoDQNTrain:
 
                     # augment reward
                     reward = reward * REWARD_MULTIPLIER
-                    reward += self.evoRewardObject.get_reward(
+                    reward += evo_reward_object.get_reward(
                         n, action, agent.state.flatten())
 
                     if done:
@@ -424,7 +427,7 @@ class EvoDQNTrain:
             scores_deque.append(episode_reward_max)
             scores.append(episode_reward_max)
 
-            # find time taken for each trial
+            # find time taken for each episode
             time_end = time.time()
             time_taken = (time_end - time_start) / 60
 
@@ -440,13 +443,13 @@ class EvoDQNTrain:
                         file=f)
             if ep == n_episodes:
                 model_max = dqn_agents[best_index]
-                #model_max.qnetwork.model.save("models/grid_evodqn-population{}-{}-{}.model".format(self.n_population,self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M:%S")))
-                augmented_reward_max = self.evoRewardObject.get_DNA(best_index)
+                #model_max.qnetwork.model.save("models/grid_evodqn-population{}-{}-{}.model".format(n_population,self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M:%S")))
+                augmented_reward_max = evo_reward_object.get_DNA(best_index)
                 break
 
             # Evolve rewards
-            self.evoRewardObject.set_fitness(agent_mean)
-            self.evoRewardObject.evolve()
+            evo_reward_object.set_fitness(agent_mean)
+            evo_reward_object.evolve()
 
         # render successful model
         if (render):

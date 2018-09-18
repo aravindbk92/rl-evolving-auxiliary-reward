@@ -4,6 +4,8 @@ import time
 import argparse
 import matplotlib.pyplot as plt
 import os.path
+import gym
+import gym_minigrid
 
 NUM_EPISODES = 25
 AVERAGED_OVER = 10
@@ -11,6 +13,15 @@ AVERAGED_OVER = 10
 DQN_TYPE = 0
 EVODQN_TYPE = 1
 
+class EnvironmentWrapper:
+    def __init__(self):
+        self.env_name = "MiniGrid-Empty-16x16-v0"
+        self.env = gym.make("MiniGrid-Empty-16x16-v0")
+        self.obs_space_size = self.env.observation_space.spaces['image'].shape[0] ** 2
+        self.action_space_size = self.env.action_space.n
+
+    def preprocess(self, state):
+        return state['image'][:, :, 0].reshape(1, self.obs_space_size)
 
 def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
                    dqn_type=DQN_TYPE,
@@ -94,7 +105,6 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
         print()
 
     return episode_reward_trials
-
 
 parser = argparse.ArgumentParser("simple_example")
 parser.add_argument(
