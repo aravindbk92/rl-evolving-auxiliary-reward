@@ -12,15 +12,25 @@ AVERAGED_OVER = 10
 DQN_TYPE = 0
 EVODQN_TYPE = 1
 
-class EnvironmentWrapper:
+class GridWorldEnvironmentWrapper:
     def __init__(self):
         self.env_name = "MiniGrid-Empty-16x16-v0"
-        self.env = gym.make("MiniGrid-Empty-16x16-v0")
+        self.env = gym.make(self.env_name)
         self.obs_space_size = self.env.observation_space.spaces['image'].shape[0] ** 2
         self.action_space_size = self.env.action_space.n
 
     def preprocess(self, state):
         return state['image'][:, :, 0].reshape(1, self.obs_space_size)
+
+class AtariEnvironmentWrapper:
+    def __init__(self):
+        self.env_name = "CartPole-v0"
+        self.env = gym.make(self.env_name)
+        self.obs_space_size = self.env.observation_space.shape[0]
+        self.action_space_size = self.env.action_space.n
+
+    def preprocess(self, state):
+        return state.reshape(1,self.obs_space_size)
 
 # Runs a trial in parallel. Use run_grid_trials.bash
 def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
@@ -36,7 +46,7 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
     log_filename = "logs/" + base_filename
 
     # initial vars
-    env_wrapper = EnvironmentWrapper()
+    env_wrapper = GridWorldEnvironmentWrapper()
     episode_reward_trials = np.empty((0, NUM_EPISODES))
     augment = ''
     trials_completed = 1
