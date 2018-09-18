@@ -134,20 +134,7 @@ n_population = args.n_pop
 # Trials DQN with evoReward
 run_dqn_trials(env_id = env,dqn_type=EVODQN_TYPE, num_population=n_population)
 
-# plot figure
-mean_rewards = np.average(episode_reward_trials,axis=0)
-std_rewards = np.std(episode_reward_trials,axis=0)
-plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
+# Trials DQN
+episode_reward_trials = run_dqn_trials(env_id=env)
 
-# # Trials DQN
-# episode_reward_trials = run_dqn_trials(env_id=env)
-#
-# # plot figure
-# mean_rewards = np.average(episode_reward_trials,axis=0)
-# std_rewards = np.std(episode_reward_trials,axis=0)
-# plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
-#
-# plt.xlabel("Episode")
-# plt.ylabel("Average Cumulative Reward")
-# plt.legend(title="DQN type")
-# plt.savefig(base_filename+"result.png")
+# Use load_and_generate_figure.py to generate graphs from saved episode_reward_trials
