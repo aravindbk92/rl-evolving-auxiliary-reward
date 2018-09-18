@@ -9,7 +9,6 @@ import gym_minigrid
 
 NUM_EPISODES = 25
 AVERAGED_OVER = 10
-
 DQN_TYPE = 0
 EVODQN_TYPE = 1
 
@@ -23,6 +22,7 @@ class EnvironmentWrapper:
     def preprocess(self, state):
         return state['image'][:, :, 0].reshape(1, self.obs_space_size)
 
+# Runs a trial in parallel. Use run_grid_trials.bash
 def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
                    dqn_type=DQN_TYPE,
                    num_population=20):
@@ -129,15 +129,15 @@ mean_rewards = np.average(episode_reward_trials,axis=0)
 std_rewards = np.std(episode_reward_trials,axis=0)
 plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='darkorange',ecolor='#FF8C0055',errorevery=5,yerr=std_rewards,label="DQN-evoReward, pop: "+str(n_population))
 
-### Trials DQN
-episode_reward_trials = run_dqn_trials(env_id=env)
-
-# plot figure
-mean_rewards = np.average(episode_reward_trials,axis=0)
-std_rewards = np.std(episode_reward_trials,axis=0)
-plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
-
-plt.xlabel("Episode")
-plt.ylabel("Average Cumulative Reward")
-plt.legend(title="DQN type")
-plt.savefig(base_filename+"result.png")
+# # Trials DQN
+# episode_reward_trials = run_dqn_trials(env_id=env)
+#
+# # plot figure
+# mean_rewards = np.average(episode_reward_trials,axis=0)
+# std_rewards = np.std(episode_reward_trials,axis=0)
+# plt.errorbar(range(1,mean_rewards.size+1),mean_rewards,color='#4682B4FF',ecolor='#4682B455',errorevery=5,yerr=std_rewards,label="DQN")
+#
+# plt.xlabel("Episode")
+# plt.ylabel("Average Cumulative Reward")
+# plt.legend(title="DQN type")
+# plt.savefig(base_filename+"result.png")
