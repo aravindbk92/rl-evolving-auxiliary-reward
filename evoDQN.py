@@ -37,7 +37,6 @@ class QNetwork:
         self.optimizer = Adam(lr=learning_rate)
         self.model.compile(loss='mse', optimizer=self.optimizer)
 
-
 class Memory():
     def __init__(self, max_size=1000):
         self.buffer = deque(maxlen=max_size)
@@ -238,9 +237,12 @@ class DQNTrain(DQNBase):
         return [np.array(scores)]
 
 
-class evoAgent(DQNBase):
-    def __init__(self, env_wrapper, averaged_over):
-        super(evoAgent, self).__init__(env_wrapper,averaged_over)
+class evoAgent():
+    def __init__(self, env_wrapper, averaged_over, id):
+        self.env = env_wrapper.env
+        self.obs_space_size = env_wrapper.obs_space_size
+        self.action_space_size = env_wrapper.action_space_size
+        self.preprocess = env_wrapper.preprocess
 
         self.qnetwork = QNetwork(
             hidden_size=hidden_size,
@@ -252,6 +254,7 @@ class evoAgent(DQNBase):
         self.last_mean_reward = 0.0
         self.scores_deque = deque(maxlen=averaged_over)
         self.explore_p = explore_start
+        self.id = id
 
     def populate_memory(self):
         # Initialize the simulation
@@ -346,7 +349,7 @@ class EvoDQNTrain(DQNBase):
         dqn_agents = []
         for n in range(n_population):
             dqn_agents.append(
-                evoAgent(self.env_wrapper, self.score_averaged_over))
+                evoAgent(self.env_wrapper, self.score_averaged_over, n))
 
         #max steps
         n_steps = dqn_agents[0].env.max_steps
@@ -465,3 +468,214 @@ class EvoDQNTrain(DQNBase):
             np.array(scores),
             np.array(best_agent_scores), augmented_reward_max
         ]
+
+class EvoDQNTrainParallel(DQNBase):
+    def __init__(self,
+                 env_wrapper,
+                 score_averaged_over=50,
+                 log_file='logs/log',
+                 cross_rate=CROSS_RATE,
+                 mutation_rate=MUTATION_RATE,
+                 reward_bound=REWARD_BOUND):
+
+        super(EvoDQNTrainParallel, self).__init__(env_wrapper,score_averaged_over,log_file)
+        self.env_wrapper = env_wrapper
+        self.cross_rate = cross_rate
+        self.mutation_rate = mutation_rate
+        self.reward_bound = reward_bound
+
+    def train(self,
+              n_episodes=1000,
+              n_population=8,
+              render=False,
+              epsilon=EPSILON):
+        with open(self.log_file, 'a+') as f:
+            print(file=f)
+            print("--evoDQN stats--", file=f)
+            print("ENVIRONMENT:", self.env_wrapper.env_name, file=f)
+            print("AVERAGED_OVER:", self.score_averaged_over, file=f)
+            print("NUM_EPISODES:", n_episodes, file=f)
+            print()
+
+        # Init augmented reward object
+        evo_reward_object = evoReward.evoReward(
+            DNA_bound=self.reward_bound,
+            cross_rate=self.cross_rate,
+            mutation_rate=self.mutation_rate,
+            pop_size=n_population,
+            obs_space_size=self.obs_space_size,
+            action_size=self.action_space_size,
+            dna_type=1)
+
+        # Init population of agents
+        dqn_agents = []
+        for n in range(n_population):
+            dqn_agents.append(
+                evoAgent(self.env_wrapper, self.score_averaged_over, n))
+
+        #max steps
+        n_steps = dqn_agents[0].env.max_steps
+
+        best_agent_scores = []
+        best_agent_scores_dequeue = deque(maxlen=self.score_averaged_over)
+        scores = []
+        scores_deque = deque(maxlen=self.score_averaged_over)
+        augmented_reward_max = None
+        model_max = None
+        agent_mean = np.zeros(n_population)
+        for ep in range(1, n_episodes + 1):
+            episode_reward_population = np.array([])
+            time_start = time.time()
+
+            for n in range(n_population):
+                episode_reward = 0.0
+                agent = dqn_agents[n]
+                agent.explore_p = epsilon
+
+                for t in range(1, n_steps + 1):
+                    # Explore or Exploit
+                    if agent.explore_p > np.random.rand():
+                        # Make a random action
+                        action = agent.env.action_space.sample()
+                    else:
+                        # Get action from Q-network
+                        Qs = agent.qnetwork.model.predict(agent.state)[0]
+                        action = np.argmax(Qs)
+
+                    # step environment
+                    next_state, reward, done, _ = agent.env.step(action)
+                    next_state = self.preprocess(next_state)
+                    episode_reward += reward
+
+                    # augment reward
+                    reward = reward * REWARD_MULTIPLIER
+                    reward += evo_reward_object.get_reward(
+                        n, action, agent.state.flatten())
+
+                    if done:
+                        # the episode ends so no next state
+                        next_state = np.zeros(agent.state.shape)
+
+                        # Add experience to memory
+                        agent.memory.add((agent.state, action, reward,
+                                          next_state))
+
+                        # Start new episode
+                        agent.env.reset()
+                        # Take one random step to get the pole and cart moving
+                        agent.state, reward, done, _ = agent.env.step(
+                            agent.env.action_space.sample())
+                        agent.state = self.preprocess(agent.state)
+                        break
+                    else:
+                        # Add experience to memory
+                        agent.memory.add((agent.state, action, reward,
+                                          next_state))
+                        agent.state = next_state
+
+                    agent.model_train()
+
+                episode_reward_population = np.append(
+                    episode_reward_population, episode_reward)
+                agent.scores_deque.append(episode_reward)
+                agent_mean[n] = np.mean(agent.scores_deque)
+
+            # Add best agent rewards to list
+            best_index = np.argmax(agent_mean)
+            best_agent_score = episode_reward_population[best_index]
+            best_agent_scores.append(best_agent_score)
+            best_agent_scores_dequeue.append(best_agent_score)
+
+            # Add max reward to list
+            max_index = np.argmax(episode_reward_population)
+            episode_reward_max = episode_reward_population[max_index]
+            scores_deque.append(episode_reward_max)
+            scores.append(episode_reward_max)
+
+            # find time taken for each episode
+            time_end = time.time()
+            time_taken = (time_end - time_start) / 60
+
+            if (ep % PRINT_INTERVAL == 0):
+                with open(self.log_file, 'a+') as f:
+                    print(
+                        'Episode {}\tAvgMax({:d}): {:.2f}\tCurrentMax: {:.2f}\tAvgBestAgent({:d}): {:.2f}\tCurrentBestAgent: {:.2f}\tTime: {:.2f}'.
+                        format(ep, self.score_averaged_over,
+                               np.mean(scores_deque), episode_reward_max,
+                               self.score_averaged_over,
+                               np.mean(best_agent_scores_dequeue),
+                               best_agent_score, time_taken),
+                        file=f)
+            if ep == n_episodes:
+                model_max = dqn_agents[best_index]
+                #model_max.qnetwork.model.save("models/grid_evodqn-population{}-{}-{}.model".format(n_population,self.env_name, datetime.datetime.now().strftime("%d-%m-%y %H:%M:%S")))
+                augmented_reward_max = evo_reward_object.get_DNA(best_index)
+                break
+
+            # Evolve rewards
+            evo_reward_object.set_fitness(agent_mean)
+            evo_reward_object.evolve()
+
+        # render successful model
+        if (render):
+            state = self.preprocess(model_max.env.reset())
+            is_done = False
+            while (not is_done):
+                model_max.env.render()
+                action = model_max.qnetwork.model.predict(state)[0]
+                next_state, reward, is_done, _ = model_max.env.step(action)
+                state = self.preprocess(next_state)
+
+        return [
+            np.array(scores),
+            np.array(best_agent_scores), augmented_reward_max
+        ]
+
+    @staticmethod
+    def run_agent_episode(agent, preprocess, evo_reward_object, epsilon, n_steps):
+        episode_reward = 0.0
+        agent.explore_p = epsilon
+
+        for t in range(1, n_steps + 1):
+            # Explore or Exploit
+            if agent.explore_p > np.random.rand():
+                # Make a random action
+                action = agent.env.action_space.sample()
+            else:
+                # Get action from Q-network
+                Qs = agent.qnetwork.model.predict(agent.state)[0]
+                action = np.argmax(Qs)
+
+            # step environment
+            next_state, reward, done, _ = agent.env.step(action)
+            next_state = preprocess(next_state)
+            episode_reward += reward
+
+            # augment reward
+            reward = reward * REWARD_MULTIPLIER
+            reward += evo_reward_object.get_reward(
+                agent.id, action, agent.state.flatten())
+
+            if done:
+                # the episode ends so no next state
+                next_state = np.zeros(agent.state.shape)
+
+                # Add experience to memory
+                agent.memory.add((agent.state, action, reward,
+                                  next_state))
+
+                # Start new episode
+                agent.env.reset()
+                # Take one random step to get the pole and cart moving
+                agent.state, reward, done, _ = agent.env.step(
+                    agent.env.action_space.sample())
+                agent.state = preprocess(agent.state)
+                break
+            else:
+                # Add experience to memory
+                agent.memory.add((agent.state, action, reward,
+                                  next_state))
+                agent.state = next_state
+
+            agent.model_train()
+
