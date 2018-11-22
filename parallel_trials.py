@@ -38,9 +38,9 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
                    num_population=20):
 
     # Log and stat file names
-    base_filename = base_filename + env_id + str(dqn_type)
     base_filename = ('grid_evoreward_pop' + str(num_population)
                      if dqn_type == EVODQN_TYPE else 'grid_dqn')
+    base_filename = base_filename + env_id + str(dqn_type)
     trial_save_filename = "plotted_values/" + base_filename + 'maxrewards.npy'
     bestagent_save_filename = "plotted_values/" + base_filename + 'agentrewards.npy'
     log_filename = "logs/" + base_filename
@@ -119,7 +119,7 @@ def run_dqn_trials(env_id="MiniGrid-Empty-6x6-v0",
 
     return episode_reward_trials
 
-parser = argparse.ArgumentParser("simple_example")
+parser = argparse.ArgumentParser()
 parser.add_argument(
     "--env",
     help="String with env id",
