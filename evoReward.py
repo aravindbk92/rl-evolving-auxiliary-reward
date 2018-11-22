@@ -34,6 +34,18 @@ class evoReward():
         self.pop = np.random.randint(
             *DNA_bound, size=(pop_size, self.DNA_size)).astype(np.int8)
 
+        self.num_agents_finished = 0
+        self.rewards_ready = False
+        self.num_agents_ready = 0
+
+    def are_rewards_ready(self):
+        return self.rewards_ready
+
+    def notify_episode_start(self):
+        self.num_agents_ready += 1
+        if self.num_agents_finished == self.pop_size:
+            self.rewards_ready = False
+
     def set_fitness(self, fitness):
         ptp = np.ptp(fitness)
         if ptp != 0:
@@ -41,6 +53,22 @@ class evoReward():
             self.fitness = normalized_fitness
         else:
             self.fitness = fitness
+
+    def normalize_fitness(self):
+        ptp = np.ptp(self.fitness)
+        if ptp != 0:
+            self.fitness = (self.fitness - np.min(self.fitness)) / ptp
+
+    def set_agent_fitness(self, fitness, id):
+        self.fitness[id] = fitness
+        self.num_agents_finished += 1
+
+        if self.num_agents_finished == self.pop_size:
+            self.normalize_fitness()
+            self.rewards_ready = False
+            self.evolve()
+            self.num_agents_finished = 0
+            self.rewards_ready = True
 
     def get_fitness(self):
         return self.fitness
@@ -80,6 +108,9 @@ class evoReward():
             child = self.mutate(child)
             parent[:] = child
         self.pop = pop
+
+        with open("test.txt", 'a+') as f:
+            print(self.pop, file=f)
 
     def get_reward(self, dna_index, action, state):
         # if dna consists of explicit rewards that mapped to action x state pairs
