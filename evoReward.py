@@ -8,10 +8,6 @@ Created on Wed Jul 25 11:36:51 2018
 
 import numpy as np
 
-TYPE_INDEX = 0  # if dna consists of explicit rewards that mapped to action x state pairs
-TYPE_WEIGHTS = 1  # if dna consists of weights mapped to actions. reward is linear combination of weights and state
-
-
 class evoReward():
     def __init__(self,
                  DNA_bound,
@@ -19,16 +15,14 @@ class evoReward():
                  mutation_rate,
                  pop_size,
                  obs_space_size,
-                 action_size,
-                 dna_type=TYPE_INDEX):
+                 action_size):
         self.DNA_bound = DNA_bound
         self.cross_rate = cross_rate
         self.mutate_rate = mutation_rate
         self.pop_size = pop_size
-        self.fitness = np.array([])
+        self.fitness = np.zeros(pop_size)
         self.obs_space_size = obs_space_size
         self.action_size = action_size
-        self.dna_type = dna_type
 
         self.DNA_size = obs_space_size * action_size
         self.pop = np.random.randint(
@@ -38,29 +32,29 @@ class evoReward():
         self.rewards_ready = False
         self.num_agents_ready = 0
 
-    def are_rewards_ready(self):
-        return self.rewards_ready
-
-    def notify_episode_start(self):
-        self.num_agents_ready += 1
-        if self.num_agents_finished == self.pop_size:
-            self.rewards_ready = False
-
     def set_fitness(self, fitness):
-        ptp = np.ptp(fitness)
-        if ptp != 0:
-            normalized_fitness = (fitness - np.min(fitness)) / ptp
-            self.fitness = normalized_fitness
-        else:
-            self.fitness = fitness
+        self.fitness = fitness
+        self.normalize_fitness()
+
+    def get_fitness(self):
+        return self.fitness
 
     def normalize_fitness(self):
         ptp = np.ptp(self.fitness)
         if ptp != 0:
             self.fitness = (self.fitness - np.min(self.fitness)) / ptp
 
-    def set_agent_fitness(self, fitness, id):
-        self.fitness[id] = fitness
+    def are_rewards_ready(self):
+        return self.rewards_ready
+
+    def notify_episode_start(self):
+        self.num_agents_ready += 1
+        if self.num_agents_ready == self.pop_size:
+            self.rewards_ready = False
+            self.num_agents_ready = 0
+
+    def set_agent_fitness(self, fitness, agent_id):
+        self.fitness[agent_id] = fitness
         self.num_agents_finished += 1
 
         if self.num_agents_finished == self.pop_size:
@@ -69,9 +63,6 @@ class evoReward():
             self.evolve()
             self.num_agents_finished = 0
             self.rewards_ready = True
-
-    def get_fitness(self):
-        return self.fitness
 
     def select(self):
         fitness = self.get_fitness(
@@ -109,22 +100,11 @@ class evoReward():
             parent[:] = child
         self.pop = pop
 
-        with open("test.txt", 'a+') as f:
-            print(self.pop, file=f)
-
     def get_reward(self, dna_index, action, state):
-        # if dna consists of explicit rewards that mapped to action x state pairs
-        if self.dna_type == TYPE_INDEX:
-            reward_index = action * self.obs_space_size + state
-            return self.pop[dna_index, reward_index]
-
-        # if dna consists of weights mapped to actions
-        # reward is linear combination of weights and state
-        if self.dna_type == TYPE_WEIGHTS:
-            weight_matrix = self.pop[dna_index].reshape(
-                self.action_size, self.obs_space_size)
-            weights = weight_matrix[action]
-            return np.sum(weights * state)
+        weight_matrix = self.pop[dna_index].reshape(
+            self.action_size, self.obs_space_size)
+        weights = weight_matrix[action]
+        return np.sum(weights * state)
 
     def get_DNA(self, n):
         return self.pop[n].reshape((self.action_size, self.obs_space_size))
