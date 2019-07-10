@@ -15,7 +15,7 @@ env='MiniGrid-Empty-6x6-v0'
 echo $env
 for i in {1..8}; do  
   echo -e "\nTrial $i $env\n" 
-  python ./gridworld_experiments.py --env $env&
+  python ../parallel_trials.py.py --env $env&
   sleep 1
 done
 wait

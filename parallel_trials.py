@@ -127,12 +127,14 @@ parser.add_argument(
     default="MiniGrid-Empty-6x6-v0")
 parser.add_argument(
     "--n_pop", help="Number of population of agents", type=int, default=10)
+parser.add_argument(
+    "--dqn_type", help="0 for normal DQN, 1 for EvoDQN", type=int, default=1)
 args = parser.parse_args()
 env = args.env
 n_population = args.n_pop
 
 # Trials DQN with evoReward
-run_dqn_trials(env_id = env,dqn_type=EVODQN_TYPE, num_population=n_population)
+run_dqn_trials(env_id = env,dqn_type=args.dqn_type, num_population=n_population)
 
 # Trials DQN
 episode_reward_trials = run_dqn_trials(env_id=env)

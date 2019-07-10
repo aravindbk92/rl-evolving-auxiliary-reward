@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-DQN = "plotted_values/grid_dqnMiniGrid-Empty-6x6-v00maxrewards.npy"
+DQN = "../results/plotted_values/grid_dqnMiniGrid-Empty-6x6-v00maxrewards.npy"
 POPULATION = 10
-EVODQN = "plotted_values/grid_evoreward_pop10MiniGrid-Empty-6x6-v01maxrewards.npy"
+EVODQN = "../results/plotted_values/grid_evoreward_pop10MiniGrid-Empty-6x6-v01maxrewards.npy"
 
 AVERAGED_OVER = 20
 MAX_TRIALS_DQN = 336
