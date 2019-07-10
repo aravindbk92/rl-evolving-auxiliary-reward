@@ -1,4 +1,4 @@
-# DQN with Evolving Auxilliary Reward Function
+# DQN with Evolving Auxiliary Reward Function
 
 DQN is augmented with a reward function (**EvoReward**) that evolves (each episode currently) using a basic genetic algorithm. 
 
@@ -6,17 +6,17 @@ EvoReward takes in the current environment state and agent action to provide a g
 practically used.
 
 # Requirements
-python 3.5
-Keras 
-gym
-gym_minigrid
-numpy
-matplotlib
+python 3.5  
+Keras  
+gym  
+gym_minigrid  
+numpy  
+matplotlib  
 
 [gym_minigrid](https://github.com/maximecb/gym-minigrid) is a minimal gym environment with sparse rewards. 
 
 # How to use
-Run: python `paralell_trials.py`
+##### Run: python `paralell_trials.py`
 Runs DQN+EvoReward by default with a population of 10 on MiniGrid-Empty-6x6-v0 environment.
 Use '--dqn_type 0' argument to use a normal DQN to compare.
 Use '--help' to see more options.
